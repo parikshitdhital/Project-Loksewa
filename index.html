@@ -5,37 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Loksewa Hub — Practice Tools</title>
 <link rel="stylesheet" href="home.css" />
+<link rel="stylesheet" href="nav.css" />
 </head>
 <body>
-
-  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-
-  <div class="drawer-backdrop" id="drawerBackdrop"></div>
-
-  <nav class="drawer" id="drawer">
-    <div class="drawer-header">
-      <div class="drawer-title">Loksewa Hub</div>
-      <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>
-    </div>
-    <div class="drawer-links">
-      <a href="index.html" class="drawer-link">🏠 Home</a>
-      <a href="quiz.html" class="drawer-link">🗺️ Nepal Geography Quiz</a>
-      <a href="constitution.html" class="drawer-link">⚖️ Constitution &amp; Governance</a>
-      <a href="history.html" class="drawer-link">📜 Nepal's History</a>
-      <div class="drawer-link soon">📰 Current Affairs <span class="drawer-soon-tag">Soon</span></div>
-      <div class="drawer-link soon">📝 Model Questions <span class="drawer-soon-tag">Soon</span></div>
-      <div class="drawer-link soon">📚 Study Material <span class="drawer-soon-tag">Soon</span></div>
-      <div class="drawer-link soon">🎨 Theme <span class="drawer-soon-tag">Soon</span></div>
-    </div>
-  </nav>
 
   <div class="wrap">
     <header class="hero">
       <div class="hero-badge">लोक सेवा तयारी</div>
-      <h1 class="hero-title">Loksewa Hub</h1>
-      <p class="hero-sub">A growing set of free practice tools to help you prepare — one exam topic at a time.</p>
+      <h1 class="hero-title" data-i18n="home_title">Loksewa Hub</h1>
+      <p class="hero-sub" data-i18n="home_sub">A growing set of free practice tools to help you prepare — one exam topic at a time.</p>
     </header>
 
     <main class="tool-grid">
@@ -43,71 +21,54 @@
       <a class="tool-card live" href="quiz.html">
         <div class="tool-icon">🗺️</div>
         <div class="tool-body">
-          <div class="tool-name">Nepal Geography Quiz</div>
-          <div class="tool-desc">Districts, cities and landmarks — test yourself on the map of Nepal.</div>
+          <div class="tool-name" data-i18n="home_quiz_name">Nepal Geography Quiz</div>
+          <div class="tool-desc" data-i18n="home_quiz_desc">Districts, cities and landmarks — test yourself on the map of Nepal.</div>
         </div>
-        <div class="tool-status status-live">Play now</div>
+        <div class="tool-status status-live" data-i18n="home_play">Play now</div>
       </a>
 
       <a class="tool-card live" href="constitution.html">
         <div class="tool-icon">⚖️</div>
         <div class="tool-body">
-          <div class="tool-name">Constitution &amp; Governance</div>
-          <div class="tool-desc">Fundamental rights, federal structure and constitutional bodies.</div>
+          <div class="tool-name" data-i18n="home_const_name">Constitution &amp; Governance</div>
+          <div class="tool-desc" data-i18n="home_const_desc">Fundamental rights, federal structure and constitutional bodies.</div>
         </div>
-        <div class="tool-status status-live">Explore</div>
+        <div class="tool-status status-live" data-i18n="home_explore">Explore</div>
       </a>
 
       <a class="tool-card live" href="history.html">
         <div class="tool-icon">📜</div>
         <div class="tool-body">
-          <div class="tool-name">Nepal's History</div>
-          <div class="tool-desc">Key events, dynasties and milestones through the ages.</div>
+          <div class="tool-name" data-i18n="home_hist_name">Nepal's History</div>
+          <div class="tool-desc" data-i18n="home_hist_desc">Key events, dynasties and milestones through the ages.</div>
         </div>
-        <div class="tool-status status-live">Explore</div>
+        <div class="tool-status status-live" data-i18n="home_explore">Explore</div>
       </a>
 
       <div class="tool-card soon">
         <div class="tool-icon">📰</div>
         <div class="tool-body">
-          <div class="tool-name">Current Affairs</div>
-          <div class="tool-desc">Stay sharp on recent national and international events.</div>
+          <div class="tool-name" data-i18n="home_cur_name">Current Affairs</div>
+          <div class="tool-desc" data-i18n="home_cur_desc">Stay sharp on recent national and international events.</div>
         </div>
-        <div class="tool-status status-soon">Coming soon…</div>
+        <div class="tool-status status-soon" data-i18n="home_soon">Coming soon…</div>
       </div>
 
       <div class="tool-card soon">
         <div class="tool-icon">📝</div>
         <div class="tool-body">
-          <div class="tool-name">Model Questions</div>
-          <div class="tool-desc">Practice sets modeled on past Loksewa exam papers.</div>
+          <div class="tool-name" data-i18n="home_model_name">Model Questions</div>
+          <div class="tool-desc" data-i18n="home_model_desc">Practice sets modeled on past Loksewa exam papers.</div>
         </div>
-        <div class="tool-status status-soon">Coming soon…</div>
+        <div class="tool-status status-soon" data-i18n="home_soon">Coming soon…</div>
       </div>
 
     </main>
 
-    <footer class="foot-note">More tools are added over time — check back for updates.</footer>
+    <footer class="foot-note" data-i18n="home_foot">More tools are added over time — check back for updates.</footer>
   </div>
 
-  <script>
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const drawer = document.getElementById('drawer');
-    const drawerBackdrop = document.getElementById('drawerBackdrop');
-    const drawerClose = document.getElementById('drawerClose');
-
-    function openDrawer(){
-      drawer.classList.add('open');
-      drawerBackdrop.classList.add('open');
-    }
-    function closeDrawer(){
-      drawer.classList.remove('open');
-      drawerBackdrop.classList.remove('open');
-    }
-    hamburgerBtn.addEventListener('click', openDrawer);
-    drawerClose.addEventListener('click', closeDrawer);
-    drawerBackdrop.addEventListener('click', closeDrawer);
-  </script>
-
+<script src="i18n.js"></script>
+<script src="nav.js"></script>
 </body>
 </html>

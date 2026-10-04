@@ -1,45 +1,48 @@
-# Nepal Geography Quiz — Deploy Guide
+# Loksewa Hub — Deploy Guide
 
-This folder is a plain static website: `index.html`, `styles.css`, `app.js`,
-and a `data/` folder with the district/city/landmark JSON. No build step,
-no server-side code — any static host works.
+A plain static website for Loksewa (civil service) exam practice. No build
+step, no backend — any static host works. Everything lives in the root folder.
 
-## Files
-- `index.html` — page structure
-- `styles.css` — all styling
-- `app.js` — quiz logic (fetches the JSON files at load time)
-- `data/districts.json` — 77 district boundary shapes
-- `data/provinces.json` — district → province lookup
-- `data/cities.json` — 40 major cities
-- `data/landmarks.json` — 36 mountains, lakes, rivers, parks, temples
+## Pages
+- `index.html` (+ `home.css`) — home hub with tool cards
+- `quiz.html` (+ `styles.css`, `app.js`) — Nepal geography map quiz
+- `constitution.html` (+ `constitution.css`) — Constitution overview by theme
+- `constitution-full.html` (+ `constitution-full.css`) — verbatim text (in progress)
+- `history.html` (+ `history.css`) — Nepal's history timeline
+- `placeholder.css` — styles for "coming soon" pages (not used by a page yet)
 
-Scores and leaderboards save to the visitor's own browser via
-`localStorage` — nothing leaves their device, no backend needed.
+## Language (English <-> Nepali)
+- `i18n.js` — tiny translation engine. Text marked `data-i18n="key"` is swapped
+  when the visitor taps the E / N switch at the top of the hamburger menu.
+  The choice is remembered in `localStorage`. Add strings with `I18N.add({en:{...}, ne:{...}})`.
+- Done so far: menu, home page, quiz interface, and Nepali names of districts, cities,
+  landmarks and headquarters (`names_ne.json`). Recall mode accepts English or Nepali.
+  District fact sentences (`facts_ne.json`) are translated too.
+  History page and the constitution overview are fully bilingual (strings live inside
+  `history.html` and `constitution.html`). Still English: the full constitution text.
 
-## Deploy in ~2 minutes (Vercel or Netlify)
+## Shared navigation
+- `nav.js` — injects the hamburger button and side drawer on every page
+- `nav.css` — styles for the drawer
+To add or rename a menu link, edit the `LINKS` list at the top of `nav.js`.
+Every page just needs `nav.css` in `<head>` and `<script src="nav.js">` before `</body>`.
 
-1. **Put this folder in a GitHub repo**
-   - Go to github.com → New repository → name it (e.g. `nepal-quiz`)
-   - Drag-and-drop all the files/folders above into the repo via the
-     GitHub web UI (no git commands needed) → commit
+## Quiz data (fetched by `app.js`)
+- `districts.json` — 77 district boundary shapes
+- `provinces.json` — district → province lookup
+- `cities.json` — 40 major cities
+- `landmarks.json` — 36 mountains, lakes, rivers, parks, temples
+- `facts_ne.json` — Nepali version of each district's fact sentence
+- `names_ne.json` — Nepali names (districts, cities, landmarks, headquarters)
+- `facts.json` — headquarters, population, area and a fact per district
 
-2. **Connect to Vercel or Netlify** (either works, both free)
-   - **Vercel**: vercel.com → sign in with GitHub → "Add New Project" →
-     pick your repo → leave all settings default (no framework, no build
-     command) → Deploy
-   - **Netlify**: app.netlify.com → "Add new site" → "Import an existing
-     project" → pick your repo → leave build command blank, publish
-     directory as `/` → Deploy
+Best scores save to the visitor's own browser via `localStorage`.
 
-3. **Copy your live URL** from the dashboard — it's public immediately.
-
-Any future edit: push the changed file to GitHub, the host auto-redeploys
-in under a minute.
+## Deploy (Vercel or Netlify)
+1. Put all files in a GitHub repo (web upload works, no git commands needed).
+2. Connect the repo on Vercel or Netlify; leave framework/build settings empty.
+3. Any future edit: push the changed file, the host redeploys automatically.
 
 ## Notes
-- Works fully offline-first after the initial load, aside from the Google
-  Fonts import in `styles.css` (safe to remove if you want zero external
-  requests).
-- If you ever add a real backend (shared leaderboards across visitors,
-  not just per-device), that's a bigger step — happy to help when you're
-  there.
+- Google Fonts (Rajdhani, Inter) load via `@import` at the top of each CSS file.
+  Remove that line if you want zero external requests.

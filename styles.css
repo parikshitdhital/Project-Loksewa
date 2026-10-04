@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+
 :root{
     --ink:#e9e4d8;
     --bg-deep:#12201c;
@@ -10,10 +12,9 @@
     --bad:#b5533f;
     --bad-glow:#e07a63;
     --muted:#7c9088;
-    --font-display: 'Rajdhani', 'Trebuchet MS', sans-serif;
-    --font-body: 'Inter', -apple-system, sans-serif;
+    --font-display: 'Rajdhani', 'Noto Sans Devanagari', 'Trebuchet MS', sans-serif;
+    --font-body: 'Inter', 'Noto Sans Devanagari', -apple-system, sans-serif;
   }
-  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 
   *{box-sizing:border-box;}
   html,body{

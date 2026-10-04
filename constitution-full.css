@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+
 :root{
   --ink:#e9e4d8;
   --bg-deep:#12201c;
@@ -6,10 +8,9 @@
   --gold:#c9a24b;
   --gold-soft:#e6c877;
   --muted:#7c9088;
-  --font-display: 'Rajdhani', 'Trebuchet MS', sans-serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Rajdhani', 'Noto Sans Devanagari', 'Trebuchet MS', sans-serif;
+  --font-body: 'Inter', 'Noto Sans Devanagari', -apple-system, sans-serif;
 }
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 *{box-sizing:border-box;}
 html,body{
@@ -152,4 +153,18 @@ html,body{
   color:var(--muted);
   margin-top:20px;
   line-height:1.6;
+}
+
+.part-block-status{
+  font-size:10px;
+  letter-spacing:0.3px;
+  padding:3px 8px;
+  border-radius:20px;
+  border:1px solid var(--ridge);
+  color:var(--muted);
+  white-space:nowrap;
+}
+.part-block-status.ok{
+  color:var(--gold-soft);
+  border-color:var(--gold);
 }
