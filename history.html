@@ -33,20 +33,22 @@ I18N.add({
     hist_badge:'A Timeline of Nepal', hist_title:'Nepal\'s History',
     hist_sub:'Ten major eras, from ancient kingdoms to the federal republic — tap any card to read more.',
     hist_foot1:'Dates are approximate for early eras where historical records vary.',
-    hist_foot2:'A living page — more detail and figures will be added over time.'
+    hist_foot2:'A living page — more detail and figures will be added over time.',
+    hist_more:'Read the full deep dive →'
   },
   ne:{
     hist_badge:'नेपालको कालक्रम', hist_title:'नेपालको इतिहास',
     hist_sub:'प्राचीन राज्यदेखि सङ्घीय गणतन्त्रसम्मका दश प्रमुख कालखण्ड — थप पढ्न कुनै पनि कार्डमा थिच्नुहोस्।',
     hist_foot1:'प्रारम्भिक कालखण्डका मितिहरू ऐतिहासिक अभिलेख फरक–फरक भएकाले अनुमानित हुन्।',
-    hist_foot2:'यो निरन्तर परिमार्जन हुने पृष्ठ हो — समयसँगै थप विवरण र तथ्याङ्क थपिनेछन्।'
+    hist_foot2:'यो निरन्तर परिमार्जन हुने पृष्ठ हो — समयसँगै थप विवरण र तथ्याङ्क थपिनेछन्।',
+    hist_more:'पूर्ण विस्तृत अध्ययन पढ्नुहोस् →'
   }
 });
 
 const ERAS = [
   {
     icon: '🛕', gradient: 'linear-gradient(135deg, #3a2f1c, #5c4423)',
-    title: 'Ancient Nepal', dates: 'c. 800 BCE – 879 CE',
+    title: 'Ancient Nepal', page: 'history-ancient.html', dates: 'c. 800 BCE – 879 CE',
     desc: 'The Kirat and Licchavi dynasties laid Nepal\'s earliest political and cultural foundations in the Kathmandu Valley.',
     detail: `The Kirat dynasty is traditionally considered among the earliest rulers of the Kathmandu Valley, followed by the Licchavi dynasty from around the 4th century CE. The Licchavi period is especially significant for stone inscriptions, early Hindu-Buddhist syncretism, and trade links with Tibet and India that shaped Nepal's early urban culture.`
   },
@@ -177,7 +179,7 @@ function renderEras(){
           <div class="era-dates">${tx.dates}</div>
         </div>
         <div class="era-desc">${tx.desc}</div>
-        <div class="era-detail"><div class="era-detail-inner">${tx.detail}</div></div>
+        <div class="era-detail"><div class="era-detail-inner">${tx.detail}${era.page ? `<a class="era-more" href="${era.page}" onclick="event.stopPropagation()">${I18N.t('hist_more')}</a>` : ''}</div></div>
         <div class="era-chev">▾</div>
       </div>
     `;
