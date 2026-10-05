@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Nepal's History — Loksewa Hub</title>
+<link rel="stylesheet" href="history.css" />
+<link rel="stylesheet" href="nav.css" />
+</head>
+<body>
+
+<div class="wrap">
+  <a class="back-link" href="index.html" data-i18n="back_hub">← Back to Loksewa Hub</a>
+
+  <div class="page-header">
+    <div class="page-badge" data-i18n="hist_badge">A Timeline of Nepal</div>
+    <h1 class="page-title" data-i18n="hist_title">Nepal's History</h1>
+    <p class="page-sub" data-i18n="hist_sub">Ten major eras, from ancient kingdoms to the federal republic — tap any card to read more.</p>
+  </div>
+
+  <div id="eras"></div>
+
+  <div class="page-footer-note">
+    <span data-i18n="hist_foot1">Dates are approximate for early eras where historical records vary.</span><br/>
+    <span data-i18n="hist_foot2">A living page — more detail and figures will be added over time.</span>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script>
+I18N.add({
+  en:{
+    hist_badge:'A Timeline of Nepal', hist_title:'Nepal\'s History',
+    hist_sub:'Ten major eras, from ancient kingdoms to the federal republic — tap any card to read more.',
+    hist_foot1:'Dates are approximate for early eras where historical records vary.',
+    hist_foot2:'A living page — more detail and figures will be added over time.',
+    hist_more:'Read the full deep dive →'
+  },
+  ne:{
+    hist_badge:'नेपालको कालक्रम', hist_title:'नेपालको इतिहास',
+    hist_sub:'प्राचीन राज्यदेखि सङ्घीय गणतन्त्रसम्मका दश प्रमुख कालखण्ड — थप पढ्न कुनै पनि कार्डमा थिच्नुहोस्।',
+    hist_foot1:'प्रारम्भिक कालखण्डका मितिहरू ऐतिहासिक अभिलेख फरक–फरक भएकाले अनुमानित हुन्।',
+    hist_foot2:'यो निरन्तर परिमार्जन हुने पृष्ठ हो — समयसँगै थप विवरण र तथ्याङ्क थपिनेछन्।',
+    hist_more:'पूर्ण विस्तृत अध्ययन पढ्नुहोस् →'
+  }
+});
+
+const ERAS = [
+  {
+    icon: '🛕', gradient: 'linear-gradient(135deg, #3a2f1c, #5c4423)',
+    title: 'Ancient Nepal', page: 'history-ancient.html', dates: 'c. 800 BCE – 879 CE',
+    desc: 'The Kirat and Licchavi dynasties laid Nepal\'s earliest political and cultural foundations in the Kathmandu Valley.',
+    detail: `The Kirat dynasty is traditionally considered among the earliest rulers of the Kathmandu Valley, followed by the Licchavi dynasty from around the 4th century CE. The Licchavi period is especially significant for stone inscriptions, early Hindu-Buddhist syncretism, and trade links with Tibet and India that shaped Nepal's early urban culture.`
+  },
+  {
+    icon: '🏯', gradient: 'linear-gradient(135deg, #4a2d1f, #6e4429)',
+    title: 'Medieval Nepal — Malla Era', dates: '879 – 1768 CE',
+    desc: 'The Malla dynasty ruled the Kathmandu Valley for centuries, producing much of Nepal\'s classical art and architecture.',
+    detail: `The Malla period saw the Kathmandu Valley eventually split into three rival kingdoms — Kathmandu, Patan and Bhaktapur — each competing through monumental architecture, temple-building and the arts. Much of the Newar architectural heritage still visible in the Valley's Durbar Squares today dates from this era.`
+  },
+  {
+    icon: '⚔️', gradient: 'linear-gradient(135deg, #4a1f1f, #6e2929)',
+    title: 'Unification of Nepal', dates: '1743 – 1816',
+    desc: 'King Prithvi Narayan Shah of Gorkha led a military campaign that unified dozens of small hill states into modern Nepal.',
+    detail: `Starting from the small principality of Gorkha, Prithvi Narayan Shah conquered the Kathmandu Valley by 1769 and continued expanding Nepal's territory. This campaign is considered the founding of the modern Nepali state. The unification wars continued under his successors until the Anglo-Nepalese War (1814–1816) fixed Nepal's southern border roughly at its present extent.`
+  },
+  {
+    icon: '👑', gradient: 'linear-gradient(135deg, #3a2a1a, #5c4020)',
+    title: 'Rana Regime', dates: '1846 – 1951',
+    desc: 'A single family held hereditary control of the Prime Minister\'s office for over a century, reducing the monarchy to a figurehead.',
+    detail: `Following the Kot Massacre in 1846, Jung Bahadur Rana seized power and established a hereditary Prime Ministership for the Rana family, sidelining the Shah kings as ceremonial monarchs. This autocratic system lasted 104 years, marked by isolation from the outside world and limited modernization, until it was overthrown in 1951.`
+  },
+  {
+    icon: '🕊️', gradient: 'linear-gradient(135deg, #1f3a2e, #2d5c45)',
+    title: '1951 Revolution', dates: '1950 – 1951',
+    desc: 'A popular uprising, backed by King Tribhuvan, ended Rana rule and briefly restored the monarchy\'s active role in governance.',
+    detail: `King Tribhuvan sought asylum in India in 1950 and allied with the Nepali Congress party against the Rana regime. Combined political pressure and armed resistance forced the Ranas to negotiate, ending their 104-year hold on power in 1951 and opening a short-lived experiment with multiparty democracy.`
+  },
+  {
+    icon: '🏛️', gradient: 'linear-gradient(135deg, #2a2a3a, #40405c)',
+    title: 'Panchayat Era', dates: '1960 – 1990',
+    desc: 'King Mahendra dissolved Parliament and imposed a party-less Panchayat system, centralizing power directly under the monarchy.',
+    detail: `In 1960, King Mahendra dismissed the elected government, banned political parties, and introduced the Panchayat system — a tiered, party-less council structure with the King at the top. This period lasted three decades and was eventually challenged by a growing pro-democracy movement in the late 1980s.`
+  },
+  {
+    icon: '✊', gradient: 'linear-gradient(135deg, #3a1f2a, #5c2d40)',
+    title: 'People\'s Movement (Jana Andolan I)', dates: '1990',
+    desc: 'Mass pro-democracy protests forced King Birendra to end the Panchayat system and accept a multiparty constitutional monarchy.',
+    detail: `Sustained nationwide protests in early 1990, organized by an alliance of political parties, pressured King Birendra to lift the ban on political parties and accept a new constitution establishing a multiparty parliamentary democracy under a constitutional monarchy.`
+  },
+  {
+    icon: '🔥', gradient: 'linear-gradient(135deg, #3a1a1a, #5c2626)',
+    title: 'Maoist Insurgency', dates: '1996 – 2006',
+    desc: 'A decade-long civil war between Maoist rebels and the state reshaped Nepal\'s politics and ended with the monarchy\'s decline.',
+    detail: `The Communist Party of Nepal (Maoist) launched an armed insurgency in 1996 seeking to abolish the monarchy and establish a people's republic. The conflict caused significant loss of life over ten years. It formally ended with the 2006 Comprehensive Peace Accord, which brought the Maoists into mainstream politics.`
+  },
+  {
+    icon: '🎉', gradient: 'linear-gradient(135deg, #1a3a2a, #266e45)',
+    title: 'People\'s Movement II & the Republic', dates: '2006 – 2008',
+    desc: 'A second mass uprising stripped the King of power, and Nepal formally abolished its 240-year-old monarchy in 2008.',
+    detail: `In April 2006, renewed mass protests (Jana Andolan II) forced King Gyanendra to reinstate Parliament and relinquish absolute power he had seized in 2005. The reinstated Parliament progressively curtailed royal authority, and in May 2008 Nepal's first Constituent Assembly formally declared Nepal a federal democratic republic, ending the monarchy.`
+  },
+  {
+    icon: '📜', gradient: 'linear-gradient(135deg, #2a2a1a, #40402a)',
+    title: 'The 2015 Constitution', dates: '2015 – present',
+    desc: 'After years of drafting, Nepal adopted its current constitution, establishing a federal structure with seven provinces.',
+    detail: `Promulgated on 20 September 2015, the current Constitution of Nepal restructured the country into a federal system with seven provinces, three tiers of government, and an expanded set of fundamental rights. It remains the foundational legal document governing Nepal today, and is the subject of the Constitution & Governance tool on this site.`
+  },
+];
+
+
+const ERAS_NE = [
+  {
+    title: 'प्राचीन नेपाल', dates: 'करिब ई.पू. ८०० – ई.सं. ८७९',
+    desc: 'किरात र लिच्छवि राजवंशले काठमाडौँ उपत्यकामा नेपालको सबैभन्दा प्रारम्भिक राजनीतिक र सांस्कृतिक जग बसाले।',
+    detail: `किरात राजवंशलाई परम्परागत रूपमा काठमाडौँ उपत्यकाका सबैभन्दा प्रारम्भिक शासकमध्ये मानिन्छ, जसपछि करिब चौथो शताब्दीदेखि लिच्छवि राजवंशको शासन सुरु भयो। लिच्छवि कालखण्ड शिलालेख, प्रारम्भिक हिन्दु–बौद्ध समन्वय तथा तिब्बत र भारतसँगको व्यापारिक सम्बन्धका लागि विशेष महत्त्वपूर्ण मानिन्छ, जसले नेपालको प्रारम्भिक सहरी संस्कृतिलाई आकार दियो।`
+  },
+  {
+    title: 'मध्यकालीन नेपाल — मल्ल काल', dates: 'ई.सं. ८७९ – १७६८',
+    desc: 'मल्ल राजवंशले शताब्दीऔँसम्म काठमाडौँ उपत्यकामा शासन गर्‍यो र नेपालका धेरैजसो शास्त्रीय कला तथा वास्तुकला निर्माण गरायो।',
+    detail: `मल्ल कालमा काठमाडौँ उपत्यका क्रमशः तीन प्रतिद्वन्द्वी राज्य — काठमाडौँ, पाटन र भक्तपुर — मा विभाजित भयो, जसले भव्य वास्तुकला, मन्दिर निर्माण र कलामा एकअर्कासँग प्रतिस्पर्धा गरे। आज उपत्यकाका दरबार क्षेत्रमा देखिने नेवार वास्तुकलाको अधिकांश सम्पदा यही कालको हो।`
+  },
+  {
+    title: 'नेपालको एकीकरण', dates: '१७४३ – १८१६',
+    desc: 'गोरखाका राजा पृथ्वीनारायण शाहले सैन्य अभियान चलाएर दर्जनौँ साना पहाडी राज्यहरूलाई एकीकृत गरी आधुनिक नेपाल बनाए।',
+    detail: `सानो राज्य गोरखाबाट सुरु गरी पृथ्वीनारायण शाहले सन् १७६९ सम्ममा काठमाडौँ उपत्यका जिते र नेपालको भू–भाग विस्तार गर्दै लगे। यो अभियानलाई आधुनिक नेपाली राज्यको स्थापना मानिन्छ। उनका उत्तराधिकारीहरूको नेतृत्वमा एकीकरणका युद्धहरू जारी रहे र अङ्ग्रेज–नेपाल युद्ध (१८१४–१८१६) पछि नेपालको दक्षिणी सिमाना लगभग हालको विस्तारमा निर्धारित भयो।`
+  },
+  {
+    title: 'राणा शासन', dates: '१८४६ – १९५१',
+    desc: 'एउटै परिवारले एक शताब्दीभन्दा बढी प्रधानमन्त्री पद वंशानुगत रूपमा आफ्नो नियन्त्रणमा राख्यो, जसले राजतन्त्रलाई नाममात्रको बनायो।',
+    detail: `सन् १८४६ को कोत पर्वपछि जङ्गबहादुर राणाले सत्ता कब्जा गरे र राणा परिवारका लागि वंशानुगत प्रधानमन्त्री पद स्थापना गरे, जसले शाह राजालाई औपचारिक राजाको भूमिकामा सीमित गर्‍यो। यो निरङ्कुश व्यवस्था १०४ वर्ष टिक्यो, जुन बाह्य संसारसँगको अलगाव र सीमित आधुनिकीकरणले चिन्हित थियो, र सन् १९५१ मा अन्त्य भयो।`
+  },
+  {
+    title: '२००७ सालको क्रान्ति', dates: '१९५० – १९५१',
+    desc: 'राजा त्रिभुवनको समर्थनमा भएको जनविद्रोहले राणा शासनको अन्त्य गर्‍यो र केही समयका लागि शासनमा राजतन्त्रको सक्रिय भूमिका फर्कायो।',
+    detail: `राजा त्रिभुवनले सन् १९५० मा भारतमा शरण लिए र राणा शासनविरुद्ध नेपाली कांग्रेस पार्टीसँग मिले। राजनीतिक दबाब र सशस्त्र प्रतिरोधको संयुक्त प्रभावले राणाहरूलाई वार्तामा आउन बाध्य बनायो, जसले सन् १९५१ मा उनीहरूको १०४ वर्षे सत्ता समाप्त गर्‍यो र बहुदलीय लोकतन्त्रको छोटो अवधिको प्रयोग सुरु गर्‍यो।`
+  },
+  {
+    title: 'पञ्चायत काल', dates: '१९६० – १९९०',
+    desc: 'राजा महेन्द्रले संसद् विघटन गरी दलविहीन पञ्चायत व्यवस्था लागू गरे र सत्ता प्रत्यक्ष राजतन्त्रमा केन्द्रित गरे।',
+    detail: `सन् १९६० मा राजा महेन्द्रले निर्वाचित सरकार बर्खास्त गरे, राजनीतिक दलहरूमा प्रतिबन्ध लगाए र पञ्चायत व्यवस्था ल्याए — राजा सबैभन्दा माथि रहेको तहगत, दलविहीन परिषद् संरचना। यो अवधि तीन दशक चल्यो र १९८० को दशकको उत्तरार्धमा बढ्दै गएको लोकतन्त्र समर्थक आन्दोलनले यसलाई चुनौती दियो।`
+  },
+  {
+    title: 'जनआन्दोलन (पहिलो जनआन्दोलन)', dates: '१९९०',
+    desc: 'लोकतन्त्रका लागि भएका व्यापक विरोध प्रदर्शनले राजा वीरेन्द्रलाई पञ्चायत व्यवस्था अन्त्य गर्न र बहुदलीय संवैधानिक राजतन्त्र स्वीकार्न बाध्य बनायो।',
+    detail: `सन् १९९० को सुरुमा राजनीतिक दलहरूको गठबन्धनले सञ्चालन गरेको देशव्यापी निरन्तर आन्दोलनले राजा वीरेन्द्रलाई राजनीतिक दलमाथिको प्रतिबन्ध हटाउन र संवैधानिक राजतन्त्र अन्तर्गत बहुदलीय संसदीय लोकतन्त्र स्थापना गर्ने नयाँ संविधान स्वीकार्न दबाब दियो।`
+  },
+  {
+    title: 'माओवादी सशस्त्र द्वन्द्व', dates: '१९९६ – २००६',
+    desc: 'माओवादी विद्रोही र राज्यबीचको दशक लामो गृहयुद्धले नेपालको राजनीतिलाई नयाँ आकार दियो र राजतन्त्रको पतनसँगै अन्त्य भयो।',
+    detail: `नेपाल कम्युनिस्ट पार्टी (माओवादी) ले सन् १९९६ मा राजतन्त्र खारेज गरी जनगणतन्त्र स्थापना गर्ने उद्देश्यले सशस्त्र विद्रोह सुरु गर्‍यो। दश वर्षसम्म चलेको यस द्वन्द्वमा ठूलो मानवीय क्षति भयो। सन् २००६ को विस्तृत शान्ति सम्झौताबाट यो औपचारिक रूपमा अन्त्य भयो, जसले माओवादीलाई मूलधारको राजनीतिमा ल्यायो।`
+  },
+  {
+    title: 'दोस्रो जनआन्दोलन र गणतन्त्र', dates: '२००६ – २००८',
+    desc: 'दोस्रो जनआन्दोलनले राजाबाट सत्ता खोस्यो र सन् २००८ मा नेपालले २४० वर्ष पुरानो राजतन्त्र औपचारिक रूपमा खारेज गर्‍यो।',
+    detail: `सन् २००६ को अप्रिलमा नवीकृत जनआन्दोलन (जनआन्दोलन–२) ले राजा ज्ञानेन्द्रलाई संसद् पुनर्स्थापना गर्न र सन् २००५ मा हातमा लिएको निरङ्कुश सत्ता त्याग्न बाध्य बनायो। पुनर्स्थापित संसद्ले क्रमशः शाही अधिकार कटौती गर्दै गयो र सन् २००८ को मेमा नेपालको पहिलो संविधान सभाले नेपाललाई सङ्घीय लोकतान्त्रिक गणतन्त्र घोषणा गरी राजतन्त्र अन्त्य गर्‍यो।`
+  },
+  {
+    title: 'नेपालको संविधान, २०७२', dates: '२०१५ – हालसम्म',
+    desc: 'वर्षौँको मस्यौदा प्रक्रियापछि नेपालले आफ्नो हालको संविधान अपनायो, जसले सात प्रदेशसहितको सङ्घीय संरचना स्थापना गर्‍यो।',
+    detail: `सन् २०१५ सेप्टेम्बर २० (२०७२ असोज ३) मा जारी भएको नेपालको हालको संविधानले देशलाई सात प्रदेश, तीन तहको सरकार र विस्तारित मौलिक हकसहितको सङ्घीय प्रणालीमा पुनर्संरचना गर्‍यो। यो आजसम्म नेपाल सञ्चालन गर्ने आधारभूत कानुनी दस्तावेज हो र यस साइटको "संविधान र शासन" खण्डको विषय हो।`
+  },
+];
+
+const root = document.getElementById('eras');
+function renderEras(){
+  const ne = I18N.lang === 'ne';
+  const openIdx = Array.from(root.children).findIndex(c => c.classList.contains('open'));
+  root.innerHTML = '';
+  ERAS.forEach((era, i) => {
+    const tx = (ne && ERAS_NE[i]) ? ERAS_NE[i] : era;
+    const el = document.createElement('div');
+    el.className = 'era-card';
+    el.innerHTML = `
+      <div class="era-banner" style="background:${era.gradient}">${era.icon}</div>
+      <div class="era-body">
+        <div class="era-head">
+          <div class="era-title">${tx.title}</div>
+          <div class="era-dates">${tx.dates}</div>
+        </div>
+        <div class="era-desc">${tx.desc}</div>
+        <div class="era-detail"><div class="era-detail-inner">${tx.detail}${era.page ? `<a class="era-more" href="${era.page}" onclick="event.stopPropagation()">${I18N.t('hist_more')}</a>` : ''}</div></div>
+        <div class="era-chev">▾</div>
+      </div>
+    `;
+    el.addEventListener('click', () => {
+      const willOpen = !el.classList.contains('open');
+      document.querySelectorAll('.era-card.open').forEach(c => c.classList.remove('open'));
+      if(willOpen) el.classList.add('open');
+    });
+    if(i === openIdx) el.classList.add('open');
+    root.appendChild(el);
+  });
+}
+renderEras();
+document.addEventListener('langchange', renderEras);
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>
