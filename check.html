@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Site check</title>
+<style>
+  body{margin:0;padding:20px;background:#12201a;color:#e8e2cf;font:15px/1.5 -apple-system,Segoe UI,sans-serif}
+  h1{font-size:20px;margin:0 0 4px}
+  .sum{margin:14px 0;padding:12px;border-radius:10px;background:#1b2e25;border:1px solid #34503f}
+  .row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid #243a2e;font-size:14px}
+  .ok{color:#7fd99a}.bad{color:#ff8f7a;font-weight:700}.warn{color:#f1c765}
+  small{color:#9fb3a7}
+</style>
+</head>
+<body>
+<h1>Loksewa Hub — site check</h1>
+<small>Open this page on your live site, then tell Claude what the summary says.</small>
+<div class="sum" id="sum">Checking…</div>
+<div id="list"></div>
+<script>
+const FILES = [
+  'index.html','quiz.html','history.html','constitution.html','constitution-full.html',
+  'nav.js','nav.css','i18n.js','app.js',
+  'home.css','styles.css','history.css','constitution.css','constitution-full.css',
+  'districts.json','provinces.json','cities.json','landmarks.json','facts.json','names_ne.json','facts_ne.json'
+];
+const list = document.getElementById('list');
+const sum = document.getElementById('sum');
+function row(name, cls, msg){
+  const d = document.createElement('div'); d.className = 'row';
+  d.innerHTML = '<span>' + name + '</span><span class="' + cls + '">' + msg + '</span>';
+  list.appendChild(d);
+}
+(async function(){
+  let missing = [], pageInfo = {};
+  for(const f of FILES){
+    try{
+      const r = await fetch(f + '?nocache=' + Date.now(), { cache:'no-store' });
+      const t = await r.text();
+      const looksHtml404 = (!f.endsWith('.html') && /<html/i.test(t.slice(0,300)));
+      if(!r.ok || looksHtml404){ missing.push(f); row(f, 'bad', 'MISSING'); }
+      else{
+        row(f, 'ok', 'OK · ' + Math.round(t.length/1024) + ' KB');
+        if(f.endsWith('.html')) pageInfo[f] = { usesNav: t.includes('nav.js'), hasOldDrawer: t.includes('hamburgerBtn') && !t.includes('nav.js') };
+      }
+    }catch(e){ missing.push(f); row(f, 'bad', 'ERROR'); }
+  }
+  // does the menu actually appear when index.html runs?
+  let menu = 'not tested';
+  try{
+    const fr = document.createElement('iframe');
+    fr.style.cssText = 'position:absolute;left:-9999px;width:400px;height:600px';
+    fr.src = 'index.html?nocache=' + Date.now();
+    document.body.appendChild(fr);
+    await new Promise(res => { fr.onload = res; setTimeout(res, 4000); });
+    await new Promise(res => setTimeout(res, 800));
+    const d = fr.contentDocument;
+    menu = d && d.getElementById('hamburgerBtn') ? 'FOUND' : 'NOT FOUND';
+    const langBtn = d && d.getElementById('langToggle');
+    menu += langBtn ? ' · language toggle FOUND' : ' · language toggle NOT FOUND';
+  }catch(e){ menu = 'could not test (' + e.message + ')'; }
+
+  const oldPages = Object.entries(pageInfo).filter(([k,v]) => !v.usesNav).map(([k]) => k);
+  let html = '<b>Files missing:</b> ' + (missing.length ? '<span class="bad">' + missing.join(', ') + '</span>' : '<span class="ok">none</span>') + '<br>';
+  html += '<b>Pages still on the OLD version:</b> ' + (oldPages.length ? '<span class="bad">' + oldPages.join(', ') + '</span>' : '<span class="ok">none</span>') + '<br>';
+  html += '<b>Menu on home page:</b> <span class="' + (menu.startsWith('FOUND') ? 'ok' : 'bad') + '">' + menu + '</span>';
+  sum.innerHTML = html;
+})();
+</script>
+</body>
+</html>
