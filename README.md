@@ -7,7 +7,7 @@ step, no backend — any static host works. Everything lives in the root folder.
 - `index.html` (+ `home.css`) — home hub with tool cards
 - `quiz.html` (+ `styles.css`, `app.js`) — Nepal geography map quiz
 - `constitution.html` (+ `constitution.css`) — Constitution overview by theme
-- `constitution-full.html` (+ `constitution-full.css`) — verbatim text (in progress)
+- `constitution-full.html` (+ `constitution-full.css`) — Preamble, all 308 Articles and the 9 Schedules, taken from the official English text (anthem and figures omitted)
 - `history.html` (+ `history.css`) — Nepal's history timeline
 - `placeholder.css` — styles for "coming soon" pages (not used by a page yet)
 
@@ -19,7 +19,7 @@ step, no backend — any static host works. Everything lives in the root folder.
   landmarks and headquarters (`names_ne.json`). Recall mode accepts English or Nepali.
   District fact sentences (`facts_ne.json`) are translated too.
   History page and the constitution overview are fully bilingual (strings live inside
-  `history.html` and `constitution.html`). Still English: the full constitution text.
+  `history.html` and `constitution.html`). Still English: the full constitution text (Nepali version pending).
 
 ## Shared navigation
 - `nav.js` — injects the hamburger button and side drawer on every page
