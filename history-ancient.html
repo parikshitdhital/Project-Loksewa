@@ -26,6 +26,14 @@ a.term{color:var(--gold-soft);border-bottom:1px dashed var(--gold);text-decorati
 .exam li::marker{color:var(--gold)}
 .note{font-size:12.5px;color:var(--muted)}
 .links a{color:var(--gold-soft)}
+.pop-blur{position:fixed;inset:0;z-index:40;background:rgba(10,18,15,.35);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);opacity:0;pointer-events:none;transition:opacity .2s}
+.pop-blur.show{opacity:1;pointer-events:auto}
+.pop-card{position:absolute;z-index:50;box-sizing:border-box;background:var(--bg-panel);border:1px solid var(--gold);border-radius:14px;padding:14px 16px;box-shadow:0 12px 32px rgba(0,0,0,.5);color:var(--ink);opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .18s,transform .18s}
+.pop-card.show{opacity:1;transform:none;pointer-events:auto}
+.pop-card::before{content:"";position:absolute;top:-7px;left:calc(var(--arrow,30px) - 7px);width:12px;height:12px;background:var(--bg-panel);border-left:1px solid var(--gold);border-top:1px solid var(--gold);transform:rotate(45deg)}
+.pop-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--gold-soft);margin-bottom:6px}
+.pop-card p{margin:0;font-size:14px;line-height:1.65}
+a.term.active{position:relative;z-index:45;background:rgba(230,200,119,.2);border-radius:4px}
 .back{display:inline-block;margin-bottom:6px;color:var(--gold-soft);text-decoration:none;font-size:13px}
 </style>
 </head>
@@ -154,7 +162,7 @@ a.term{color:var(--gold-soft);border-bottom:1px dashed var(--gold);text-decorati
   </ul>
 
   <h2>Terms worth a closer look</h2>
-  <p class="note">Tap a dotted term anywhere above to jump here.</p>
+  <p class="note">Tap a dotted term anywhere above to see its meaning right there. This list is the same set, for reference.</p>
 
   <details class="termbox" id="t-vamsavali"><summary>Vamsavali (chronicle)</summary><div class="sec-body">
     <p>A genealogical chronicle of kings, copied and extended over centuries. The Gopalarajavamsavali is the best known. Useful for the order of dynasties, but it mixes legend with history.</p></div></details>
@@ -185,15 +193,57 @@ a.term{color:var(--gold-soft);border-bottom:1px dashed var(--gold);text-decorati
   <p class="note">Dates before the 5th century are approximate. This page is a study aid; for exams, cross-check names and dates with your syllabus books.</p>
 </div>
 <script>
-document.querySelectorAll('a.term').forEach(function(a){
-  a.addEventListener('click', function(e){
-    var el = document.getElementById(a.getAttribute('href').slice(1));
-    if(!el) return;
-    e.preventDefault();
-    el.open = true;
-    el.scrollIntoView({ behavior:'smooth', block:'center' });
+(function(){
+  var overlay = document.createElement('div'); overlay.className = 'pop-blur';
+  var pop = document.createElement('div'); pop.className = 'pop-card'; pop.setAttribute('role','dialog');
+  document.body.appendChild(overlay); document.body.appendChild(pop);
+  var current = null;
+
+  function close(){
+    if(!current) return;
+    current.classList.remove('active');
+    overlay.classList.remove('show'); pop.classList.remove('show');
+    current = null;
+  }
+  function place(a){
+    var r = a.getBoundingClientRect();
+    var vw = document.documentElement.clientWidth;
+    var w = Math.min(340, vw - 24);
+    var sx = window.pageXOffset, sy = window.pageYOffset;
+    pop.style.width = w + 'px';
+    var left = r.left + sx + r.width / 2 - w / 2;
+    left = Math.max(12 + sx, Math.min(left, sx + vw - w - 12));
+    pop.style.left = left + 'px';
+    pop.style.top = (r.bottom + sy + 10) + 'px';
+    var arrow = r.left + sx + r.width / 2 - left;
+    pop.style.setProperty('--arrow', Math.max(20, Math.min(w - 20, arrow)) + 'px');
+  }
+  function open(a){
+    var src = document.getElementById(a.getAttribute('href').slice(1));
+    if(!src) return;
+    pop.innerHTML = '<div class="pop-title"></div><p></p>';
+    pop.firstChild.textContent = src.querySelector('summary').textContent;
+    pop.querySelector('p').textContent = src.querySelector('p').textContent;
+    if(current) current.classList.remove('active');
+    current = a; a.classList.add('active');
+    place(a);
+    overlay.classList.add('show'); pop.classList.add('show');
+    var pr = pop.getBoundingClientRect();
+    if(pr.bottom > window.innerHeight - 12){
+      window.scrollBy({ top: pr.bottom - window.innerHeight + 16, behavior: 'smooth' });
+    }
+  }
+
+  document.querySelectorAll('a.term').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      if(current === a) close(); else open(a);
+    });
   });
-});
+  overlay.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+  window.addEventListener('resize', function(){ if(current) place(current); });
+})();
 </script>
 <script src="i18n.js"></script>
 <script>I18N.add({en:{back_hist:"← Back to Nepal's History"}, ne:{back_hist:"← नेपालको इतिहासमा फर्कनुहोस्"}});</script>
