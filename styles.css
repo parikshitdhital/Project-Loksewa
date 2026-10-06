@@ -700,3 +700,16 @@
     opacity:1;
     transform:translateX(-50%) translateY(0);
   }
+
+/* ---- Laptop / mouse optimisation ---- */
+.map-viewport.zoomed{ cursor:grab; }
+.map-viewport.dragging,
+.map-viewport.dragging *{ cursor:grabbing !important; }
+@media (hover:hover) and (pointer:fine){
+  .district:not(.dimmed):not(.bg-mode):not(.locked):not(.correct):not(.wrong):hover{
+    filter:brightness(1.3);
+  }
+}
+@media (min-width:900px){
+  .wrap{ max-width:960px; }
+}
