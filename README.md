@@ -21,6 +21,9 @@ step, no backend — any static host works. Everything lives in the root folder.
   History page and the constitution overview are fully bilingual (strings live inside
   `history.html` and `constitution.html`). Still English: the full constitution text (Nepali version pending).
 
+## Desktop layout
+- `desktop.css` — wide-screen layout, loaded last on every page (3-column home cards, 2-column history and constitution lists, map-left / controls-right quiz, sticky summary column on era pages). Phones keep the original single-column layout.
+
 ## Shared navigation
 - `nav.js` — injects the hamburger button and side drawer on every page
 - `nav.css` — styles for the drawer

@@ -1,0 +1,101 @@
+/* ===== Desktop / wide-screen layout (loaded last on every page) =====
+   Mobile layout is unchanged; everything below only applies on wide screens. */
+
+@media (min-width:900px){
+  body.has-nav .wrap{ padding-left:32px; padding-right:32px; }
+
+  /* ---------- Home ---------- */
+  .tool-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:18px;
+  }
+  .hero-title{ font-size:44px; }
+  .hero-sub{ max-width:560px; font-size:16px; }
+
+  /* ---------- History list & Constitution overview ---------- */
+  #eras{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:18px;
+    align-items:start;
+  }
+  #eras .era-card{ margin-bottom:0; }
+  #categories{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:16px;
+    align-items:start;
+  }
+  #categories .category{ margin-bottom:0; }
+  #schedules{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:10px;
+  }
+  .page-header{ margin-bottom:34px; }
+  .page-title{ font-size:40px; }
+  .page-sub{ max-width:640px; font-size:16px; }
+
+  /* ---------- Full constitution text ---------- */
+  .article-text{ font-size:14.5px; line-height:1.75; }
+
+  /* ---------- Era deep-dive pages ---------- */
+  .deep p, .deep li{ font-size:15px; }
+  .tl{ font-size:14.5px; }
+}
+
+/* page widths */
+@media (min-width:900px){
+  body .wrap{ max-width:1180px; }
+  /* the full-text page is a reading page: keep lines comfortable */
+  #parts{ max-width:1000px; margin-left:auto; margin-right:auto; }
+}
+
+@media (min-width:1500px){
+  #eras{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+  #categories{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+  body .wrap{ max-width:1400px; }
+}
+
+/* ---------- Era pages: sticky summary column + reading column ---------- */
+.era-cols{ display:block; }
+@media (min-width:1000px){
+  .wrap.deep{ max-width:1300px; }
+  .era-cols{
+    display:grid;
+    grid-template-columns:minmax(320px, 400px) minmax(0,1fr);
+    gap:36px;
+    align-items:start;
+  }
+  .era-side{
+    position:sticky;
+    top:16px;
+    max-height:calc(100vh - 32px);
+    overflow:auto;
+    padding-right:4px;
+  }
+  .era-side .glance{ margin-top:0; }
+  .era-main > h2:first-child, .era-main > details:first-child{ margin-top:0; }
+}
+
+/* ---------- Quiz: map on the left, controls on the right ---------- */
+@media (min-width:1100px){
+  body .wrap:has(#mapViewport){
+    max-width:1400px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 380px;
+    grid-template-rows:repeat(19, min-content) 1fr;
+    column-gap:28px;
+    align-items:start;
+  }
+  .wrap:has(#mapViewport) > *{ grid-column:2; }
+  .wrap:has(#mapViewport) > .back-link{ grid-column:1 / -1; }
+  .wrap:has(#mapViewport) > .map-frame{
+    grid-column:1;
+    grid-row:2 / span 19;
+    align-self:start;
+    position:sticky;
+    top:12px;
+  }
+}
