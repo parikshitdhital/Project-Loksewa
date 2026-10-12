@@ -48,4 +48,34 @@
   overlay.addEventListener('click', close);
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
   window.addEventListener('resize', function(){ if(current) place(current); });
+  window.addEventListener('scroll', function(){ if(current) place(current); }, { passive:true });
+})();
+
+// ---- Desktop layout helper: group the summary (glance + timeline) and the reading column ----
+(function(){
+  var deep = document.querySelector('.wrap.deep');
+  if(!deep) return;
+  var glance = deep.querySelector('.glance');
+  var table = deep.querySelector('table.tl');
+  if(!glance || !table) return;
+  var cols = document.createElement('div'); cols.className = 'era-cols';
+  var side = document.createElement('div'); side.className = 'era-side';
+  var main = document.createElement('div'); main.className = 'era-main';
+  deep.insertBefore(cols, glance);
+  cols.appendChild(side); cols.appendChild(main);
+  // everything from .glance up to and including the first timeline table goes to the side
+  var node = glance, endNode = table;
+  while(node){
+    var next = node.nextElementSibling;
+    side.appendChild(node);
+    if(node === endNode) break;
+    node = next;
+  }
+  // everything after that goes to the main column
+  var rest = cols.nextElementSibling;
+  while(rest){
+    var nxt = rest.nextElementSibling;
+    main.appendChild(rest);
+    rest = nxt;
+  }
 })();

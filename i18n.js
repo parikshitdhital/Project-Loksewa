@@ -32,11 +32,14 @@
   }
   function apply(root){
     root = root || document;
+    // If a key has no translation yet (a page script may add its own later), keep the text already on the page
     root.querySelectorAll('[data-i18n]').forEach(function(el){
-      el.textContent = t(el.getAttribute('data-i18n'));
+      var key = el.getAttribute('data-i18n'), v = t(key);
+      if(v !== key) el.textContent = v;
     });
     root.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
-      el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+      var key = el.getAttribute('data-i18n-placeholder'), v = t(key);
+      if(v !== key) el.setAttribute('placeholder', v);
     });
     document.documentElement.lang = (lang === 'ne') ? 'ne' : 'en';
     if(document.body) document.body.classList.toggle('lang-ne', lang === 'ne');

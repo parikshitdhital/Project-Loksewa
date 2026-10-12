@@ -12,11 +12,66 @@ const PROV_COLORS = {
   6: '#e0a45f', // Karnali - ochre
   7: '#6fc9c2'  // Sudurpashchim - teal
 };
-const PROV_LABEL = {
-  0:'Provinces Mode',1:'Province 1',2:'Province 2',3:'Province 3',
-  4:'Province 4',5:'Province 5',6:'Province 6',7:'Province 7'
-};
-const MODE_LABEL = { district:'Districts', city:'Cities', landmark:'Landmarks', headquarters:'Headquarters' };
+window.LH_APP_VERSION = '2026-10-12-b';
+I18N.add({
+  en:{
+    prov_0:'Provinces Mode', prov_1:'Koshi (1)', prov_2:'Madhesh (2)', prov_3:'Bagmati (3)',
+    prov_4:'Gandaki (4)', prov_5:'Lumbini (5)', prov_6:'Karnali (6)', prov_7:'Sudurpashchim (7)',
+    mode_district:'Districts', mode_city:'Cities', mode_landmark:'Landmarks', mode_headquarters:'Headquarters',
+    mode1_district:'district', mode1_city:'city', mode1_landmark:'landmark', mode1_headquarters:'headquarters',
+    all_nepal:'All Nepal', recall_mode:'Recall Mode',
+    quiz_title:'Nepal जिल्ला', quiz_sub:'District Recognition Drill',
+    streak:'Streak', best:'Best', check:'Check',
+    search_ph:'Type a district name to find it…', recall_ph:'Type your answer…',
+    longest:'Longest streak (this scope):', shadowing:'Shadowing', info:'Info', labels:'Labels',
+    sound_on:'SOUND ON', sound_off:'SOUND OFF',
+    tap_on:'Tap on', tap_hq:'Tap the district whose HQ is',
+    type_hq:'Type the headquarters of', type_hl:'Type the highlighted {x}',
+    correct:'Correct — ',
+    wrong_tap:'That was {a} — {b} is highlighted',
+    wrong_type:'You typed "{a}" — correct: {b}',
+    new_best:'New best ({m} · {p}): {n}',
+    found:'Found: {n}', no_match:'No {x} matches "{q}"',
+    hq:'HQ: {n}', people:'{n} people', area:'{n} km²',
+    search_ph:'Search districts, cities, landmarks, HQs…',
+    recent:'Recent searches', clear_all:'Clear all', remove:'Remove',
+    tag_district:'District', tag_city:'City', tag_landmark:'Landmark', tag_hq:'HQ of {d}',
+    no_match_all:'No match for "{q}"',
+    flash:'Reveal', flash_on:'Reveal on — scoring paused', flash_off:'Reveal off',
+    flash_pause:'Reveal is on — turn it off to answer',
+    see_more:'See more', see_less:'See less'
+  },
+  ne:{
+    prov_0:'प्रदेश मोड', prov_1:'कोशी (१)', prov_2:'मधेश (२)', prov_3:'बागमती (३)',
+    prov_4:'गण्डकी (४)', prov_5:'लुम्बिनी (५)', prov_6:'कर्णाली (६)', prov_7:'सुदूरपश्चिम (७)',
+    mode_district:'जिल्ला', mode_city:'सहर', mode_landmark:'स्थल', mode_headquarters:'सदरमुकाम',
+    mode1_district:'जिल्ला', mode1_city:'सहर', mode1_landmark:'स्थल', mode1_headquarters:'सदरमुकाम',
+    all_nepal:'सम्पूर्ण नेपाल', recall_mode:'स्मरण मोड',
+    quiz_title:'नेपाल जिल्ला', quiz_sub:'जिल्ला पहिचान अभ्यास',
+    streak:'लगातार', best:'उत्कृष्ट', check:'जाँच्नुहोस्',
+    search_ph:'खोज्न जिल्लाको नाम लेख्नुहोस्…', recall_ph:'आफ्नो उत्तर लेख्नुहोस्…',
+    longest:'यस दायराको सबैभन्दा लामो क्रम:', shadowing:'छायाँ', info:'जानकारी', labels:'नामहरू',
+    sound_on:'आवाज चालु', sound_off:'आवाज बन्द',
+    tap_on:'नक्सामा छुनुहोस्', tap_hq:'जसको सदरमुकाम यो हो, त्यो जिल्ला छुनुहोस्',
+    type_hq:'यस जिल्लाको सदरमुकाम लेख्नुहोस्', type_hl:'चिह्नित {x}को नाम लेख्नुहोस्',
+    correct:'सही — ',
+    wrong_tap:'त्यो {a} थियो — {b} चिह्नित गरिएको छ',
+    wrong_type:'तपाईंले "{a}" लेख्नुभयो — सही उत्तर: {b}',
+    new_best:'नयाँ उत्कृष्ट ({m} · {p}): {n}',
+    found:'फेला पर्‍यो: {n}', no_match:'"{q}" सँग मिल्ने कुनै {x} भेटिएन',
+    hq:'सदरमुकाम: {n}', people:'{n} जना', area:'{n} वर्ग कि.मी.',
+    search_ph:'जिल्ला, सहर, स्थल वा सदरमुकाम खोज्नुहोस्…',
+    recent:'हालका खोजहरू', clear_all:'सबै हटाउनुहोस्', remove:'हटाउनुहोस्',
+    tag_district:'जिल्ला', tag_city:'सहर', tag_landmark:'स्थल', tag_hq:'{d}को सदरमुकाम',
+    no_match_all:'"{q}" सँग मिल्ने केही भेटिएन',
+    flash:'देखाउनुहोस्', flash_on:'नाम देखाउँदै — अङ्क गणना रोकिएको', flash_off:'नाम देखाउन बन्द',
+    flash_pause:'नाम देखाइँदै छ — उत्तर दिन यसलाई बन्द गर्नुहोस्',
+    see_more:'थप हेर्नुहोस्', see_less:'कम हेर्नुहोस्'
+  }
+});
+const tr = (k) => I18N.t(k);
+const PROV_LABEL = new Proxy({}, { get:(_, k) => I18N.t('prov_' + k) });
+const MODE_LABEL = new Proxy({}, { get:(_, k) => I18N.t('mode_' + k) });
 const MODE_COLOR = { district:'#c9a24b', city:'#7ab8e0', landmark:'#c48fe0', headquarters:'#e07a63' };
 
 let districts; // populated after data loads
@@ -83,7 +138,11 @@ let recallLocked = false;
 let currentTarget = null;
 let lastAsked = null;
 let locked = false;
+let recallUsed = false;
+let lastFactName = null;
 let appearedCounts = {}; // namespaced by mode, drives weighting + shadowing
+const REPEAT_PENALTY = 0.05; // smaller = already-asked items come back even less (1 = no penalty)
+let recentKeys = [];     // most recently asked items (cool-down so they don't come straight back)
 
 function scopeKey(){ return mode + ':' + scope; }
 function ensureScopeState(key){
@@ -134,6 +193,18 @@ const WRONG_WORDS = [
   "Nope, not it.","Big miss!","Wrong district!","That's a no.","Swing and a miss!",
   "Close, but no.","Nada.","Wrongo!","Not even close!","Whiff!"
 ];
+const CORRECT_WORDS_NE = [
+  "ज्यादै राम्रो!","वाह!","सही!","ठ्याक्कै!","बधाई छ!","जबर्जस्त!","शानदार!","कमाल!",
+  "सटीक!","फत्ते!","लौ त!","एकदम ठीक!","खतरा!","अब्बल!","क्या बात!"
+];
+const WRONG_WORDS_NE = [
+  "उफ्!","गलत!","अलि टाढा!","हत्तेरी!","होइन नि!","ओहो!","अर्को पटक!","चुक्यो!",
+  "खै त?","लगभग!","फेरि प्रयास गर्नुहोस्!","छुट्यो!","मिलेन!","अहिले होइन!","आइहाल्यो!"
+];
+const MILESTONE_WORDS_NE = {
+  5: "लय समात्यो!", 10: "आगो! 🔥", 15: "अविश्वसनीय!", 20: "रोकिनसक्नु!",
+  25: "दन्त्यकथा!", 50: "देवतुल्य!", 100: "प्रमाणित नेपाल विज्ञ।"
+};
 const MILESTONE_WORDS = {
   5: "ON A ROLL!", 10: "ON FIRE! 🔥", 15: "UNREAL!", 20: "UNSTOPPABLE!",
   25: "LEGENDARY!", 50: "GODLIKE!", 100: "certified nepal expert."
@@ -152,15 +223,16 @@ function pickWord(bank, lastPicked){
 }
 
 function showReaction(kind, streakAfter){
-  const milestoneWord = (kind === 'correct') ? MILESTONE_WORDS[streakAfter] : null;
+  const ne = I18N.lang === 'ne';
+  const milestoneWord = (kind === 'correct') ? (ne ? MILESTONE_WORDS_NE : MILESTONE_WORDS)[streakAfter] : null;
   let word;
   if(milestoneWord){
     word = milestoneWord;
   } else if(kind === 'correct'){
-    word = pickWord(CORRECT_WORDS, lastCorrectWord);
+    word = pickWord(ne ? CORRECT_WORDS_NE : CORRECT_WORDS, lastCorrectWord);
     lastCorrectWord = word;
   } else {
-    word = pickWord(WRONG_WORDS, lastWrongWord);
+    word = pickWord(ne ? WRONG_WORDS_NE : WRONG_WORDS, lastWrongWord);
     lastWrongWord = word;
   }
 
@@ -206,6 +278,21 @@ function buildMap(){
 
   buildMarkerLayer(CITIES, 'city-layer');
   buildMarkerLayer(LANDMARKS, 'landmark-layer');
+  buildMarkerLabels(CITIES, 'city-layer');
+  buildMarkerLabels(LANDMARKS, 'landmark-layer');
+}
+
+// Name labels next to city / landmark dots (hidden until Flash Mode shows them)
+function buildMarkerLabels(items, layerClass){
+  items.forEach(item => {
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('x', item.x + 7);
+    t.setAttribute('y', item.y - 7);
+    t.setAttribute('class', 'marker-label ' + layerClass);
+    t.setAttribute('data-name', item.name);
+    t.textContent = item.name;
+    svg.appendChild(t);
+  });
 }
 
 function labelFor(name){
@@ -260,6 +347,23 @@ function coreName(raw){
   // strips a parenthetical qualifier, e.g. "Bhadrapur (Chandragadhi)" -> "Bhadrapur"
   const idx = raw.indexOf('(');
   return (idx === -1 ? raw : raw.slice(0, idx)).trim();
+}
+
+// ---- Nepali name helpers ----
+let NAMES_NE = { districts:{}, cities:{}, landmarks:{}, hq:{} };
+let FACTS_NE = {};
+function isNe(){ return I18N.lang === 'ne'; }
+function itemCat(){ return mode === 'city' ? 'cities' : (mode === 'landmark' ? 'landmarks' : 'districts'); }
+function dn(name, cat){            // display name in the current language
+  if(!isNe()) return name;
+  return (NAMES_NE[cat || itemCat()] || {})[name] || name;
+}
+function normNe(x){                // forgiving comparison: ignore ZWJ/ZWNJ, brackets, extra spaces
+  return String(x).normalize('NFC').replace(/[\u200c\u200d]/g,'').replace(/[()]/g,' ').replace(/\s+/g,' ').trim();
+}
+function hqCore(district){         // headquarters core name in the current language
+  if(isNe() && NAMES_NE.hq[district]) return coreName(NAMES_NE.hq[district]);
+  return coreName(DISTRICT_FACTS[district][0]);
 }
 
 function shade(hex, amt){
@@ -328,15 +432,42 @@ function refreshShadowLabels(){
     }
     lbl.classList.toggle('show', show);
   });
+  refreshFlashLabels();
+}
+
+function renderPrompt(){
+  if(!currentTarget) return;
+  if(interactionType === 'recall'){
+    if(mode === 'headquarters'){
+      promptLabelEl.textContent = tr('type_hq');
+      promptEl.textContent = dn(currentTarget, 'districts');
+    } else {
+      promptLabelEl.textContent = tr('type_hl').replace('{x}', tr('mode1_' + mode));
+      promptEl.textContent = '';
+    }
+  } else if(mode === 'headquarters' && DISTRICT_FACTS[currentTarget]){
+    promptLabelEl.textContent = tr('tap_hq');
+    promptEl.textContent = hqCore(currentTarget);
+  } else {
+    promptLabelEl.textContent = tr('tap_on');
+    promptEl.textContent = dn(currentTarget);
+  }
 }
 
 function pickNext(){
   const pool = poolForScope();
-  let candidates = pool.filter(d => d.name !== lastAsked);
+
+  // Cool-down: skip anything asked in the last few questions
+  // (up to 10, but never more than about a quarter of the pool, so small scopes don't get stuck)
+  const cooldown = Math.max(1, Math.min(10, Math.floor(pool.length / 4)));
+  const recent = recentKeys.slice(-cooldown);
+  let candidates = pool.filter(d => !recent.includes(appearedKey(d.name)));
+  if(candidates.length === 0) candidates = pool.filter(d => d.name !== lastAsked);
   if(candidates.length === 0) candidates = pool;
 
-  // Weighted so already-asked items show up less often, but never zero (still infinite/all-inclusive)
-  const weights = candidates.map(d => 1 / (1 + (appearedCounts[appearedKey(d.name)] || 0)));
+  // Weighted so already-asked items come back much less often (each earlier appearance multiplies
+  // the chance by REPEAT_PENALTY), but never to zero, so every item can still appear again.
+  const weights = candidates.map(d => Math.pow(REPEAT_PENALTY, appearedCounts[appearedKey(d.name)] || 0));
   const total = weights.reduce((a,b)=>a+b, 0);
   let r = Math.random() * total;
   let choice = candidates[candidates.length-1];
@@ -345,6 +476,8 @@ function pickNext(){
     if(r <= 0){ choice = candidates[i]; break; }
   }
 
+  recentKeys.push(appearedKey(choice.name));
+  if(recentKeys.length > 12) recentKeys.shift();
   lastAsked = choice.name;
   currentTarget = choice.name;
   clearRecallGlow();
@@ -352,25 +485,12 @@ function pickNext(){
   if(interactionType === 'recall'){
     recallInput.value = '';
     recallSuggestions.innerHTML = '';
-    if(mode === 'headquarters'){
-      promptLabelEl.textContent = 'Type the headquarters of';
-      promptEl.textContent = choice.name;
-    } else {
-      const singular = MODE_LABEL[mode].replace(/s$/, '').toLowerCase();
-      promptLabelEl.textContent = 'Type the highlighted ' + singular;
-      promptEl.textContent = '';
+    if(mode !== 'headquarters'){
       const el = elementFor(choice.name);
       if(el) el.classList.add('recall-glow');
     }
-  } else {
-    if(mode === 'headquarters' && DISTRICT_FACTS[choice.name]){
-      promptLabelEl.textContent = 'Tap the district whose HQ is';
-      promptEl.textContent = coreName(DISTRICT_FACTS[choice.name][0]);
-    } else {
-      promptLabelEl.textContent = 'Tap on';
-      promptEl.textContent = choice.name;
-    }
   }
+  renderPrompt();
   feedbackEl.textContent = '';
   feedbackEl.className = 'feedback';
   locked = false;
@@ -391,13 +511,14 @@ function unlockTapping(){
 }
 
 function showTapLabel(name){
-  tapLabelEl.textContent = name;
+  tapLabelEl.textContent = dn(name);
   tapLabelEl.classList.add('show');
   setTimeout(()=> tapLabelEl.classList.remove('show'), 1000);
 }
 
 function handleTap(name, el){
   if(interactionType === 'recall') return; // map isn't the answer surface in Recall Mode
+  if(flashOn){ showTapLabel(name); return; } // Flash Mode: just show the name, don't score
   if(locked) return;
   locked = true;
   resetPaintedPaths(); // clear previous question's highlight now that a new attempt is happening
@@ -410,7 +531,7 @@ function handleTap(name, el){
 
   if(name === currentTarget){
     el.classList.add('correct');
-    feedbackEl.textContent = 'Correct — ' + currentTarget;
+    feedbackEl.textContent = tr('correct') + dn(currentTarget);
     feedbackEl.className = 'feedback ok';
     playCorrect();
     streaks[key]++;
@@ -418,12 +539,12 @@ function handleTap(name, el){
     if(streaks[key] > bests[key]){
       bests[key] = streaks[key];
       saveBest(key, bests[key]);
-      showToast('New best (' + MODE_LABEL[mode] + ' · ' + PROV_LABEL[scope] + '): ' + bests[key]);
+      showToast(tr('new_best').replace('{m}', MODE_LABEL[mode]).replace('{p}', PROV_LABEL[scope]).replace('{n}', I18N.num(bests[key])));
     }
   } else {
     el.classList.add('wrong');
     if(correctEl) correctEl.classList.add('correct');
-    feedbackEl.textContent = 'That was ' + name + ' — ' + currentTarget + ' is highlighted';
+    feedbackEl.textContent = tr('wrong_tap').replace('{a}', dn(name)).replace('{b}', dn(currentTarget));
     feedbackEl.className = 'feedback bad';
     playWrong();
     showReaction('wrong', null);
@@ -443,9 +564,9 @@ function handleTap(name, el){
 function updateScores(){
   const key = scopeKey();
   ensureScopeState(key);
-  streakNumEl.textContent = streaks[key];
-  bestNumEl.textContent = bests[key];
-  bestInlineEl.textContent = bests[key];
+  streakNumEl.textContent = I18N.num(streaks[key]);
+  bestNumEl.textContent = I18N.num(bests[key]);
+  bestInlineEl.textContent = I18N.num(bests[key]);
 }
 
 function showToast(msg){
@@ -456,11 +577,12 @@ function showToast(msg){
 
 // ---- Province selector UI ----
 function buildProvinceUI(){
+  provGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
   for(let p=0; p<=7; p++){
     const opt = document.createElement('div');
     opt.className = 'prov-opt' + (p===scope ? ' active' : '');
     opt.setAttribute('data-scope', p);
-    opt.innerHTML = `<div class="sw" style="background:${PROV_COLORS[p]}"></div><div>${p===0?'All':'P'+p}</div>`;
+    opt.innerHTML = `<div class="sw" style="background:${PROV_COLORS[p]}"></div><div>${p===0?tr('all_nepal'):PROV_LABEL[p]}</div>`;
     opt.addEventListener('click', () => selectScope(p));
     provGrid.appendChild(opt);
   }
@@ -484,7 +606,7 @@ function selectScope(p){
 function buildModeUI(){
   ['district','city','landmark','headquarters'].forEach(m => {
     const opt = document.createElement('div');
-    opt.className = 'prov-opt' + (m===mode ? ' active' : '');
+    opt.className = 'prov-opt' + (m===tapCategory ? ' active' : '');
     opt.setAttribute('data-mode', m);
     opt.innerHTML = `<div class="sw" style="background:${MODE_COLOR[m]}"></div><div>${MODE_LABEL[m]}</div>`;
     opt.addEventListener('click', () => selectMode(m));
@@ -531,6 +653,7 @@ function buildRecallModeUI(){
 }
 
 function selectRecallMode(m){
+  recallUsed = true;
   interactionType = 'recall';
   recallCategory = m;
   mode = m;
@@ -589,15 +712,47 @@ function expectedRecallAnswer(){
   return currentTarget;
 }
 
+function recallAcceptable(){       // every spelling we accept as correct (English + Nepali)
+  const list = [];
+  if(mode === 'headquarters' && DISTRICT_FACTS[currentTarget]){
+    list.push(coreName(DISTRICT_FACTS[currentTarget][0]));
+    if(NAMES_NE.hq[currentTarget]) list.push(coreName(NAMES_NE.hq[currentTarget]));
+  } else {
+    list.push(currentTarget);
+    const ne = NAMES_NE[itemCat()][currentTarget];
+    if(ne) list.push(ne);
+  }
+  return list;
+}
+function recallExpectedDisplay(){
+  const l = recallAcceptable();
+  return (isNe() && l[1]) ? l[1] : l[0];
+}
+function isRecallCorrect(typed){
+  const t1 = typed.trim().toLowerCase();
+  const t2 = normNe(typed).toLowerCase();
+  return recallAcceptable().some(a => a.toLowerCase() === t1 || normNe(a).toLowerCase() === t2);
+}
+
 function recallPool(){
   if(mode === 'headquarters'){
-    return Object.values(DISTRICT_FACTS).map(f => coreName(f[0]));
+    return Object.keys(DISTRICT_FACTS).flatMap(d => {
+      const a = [coreName(DISTRICT_FACTS[d][0])];
+      if(NAMES_NE.hq[d]) a.push(coreName(NAMES_NE.hq[d]));
+      return a;
+    });
   }
-  return currentItemSet().map(x => x.name);
+  const cat = itemCat();
+  return currentItemSet().flatMap(x => {
+    const a = [x.name];
+    if(NAMES_NE[cat][x.name]) a.push(NAMES_NE[cat][x.name]);
+    return a;
+  });
 }
 
 function submitRecall(typedRaw){
   if(recallLocked || interactionType !== 'recall') return;
+  if(flashOn){ feedbackEl.textContent = tr('flash_pause'); feedbackEl.className = 'feedback'; return; }
   const typed = (typedRaw || '').trim();
   if(!typed) return;
 
@@ -606,10 +761,10 @@ function submitRecall(typedRaw){
   recallCheckBtn.disabled = true;
   recallSuggestions.innerHTML = '';
 
-  const expected = expectedRecallAnswer();
+  const expected = recallExpectedDisplay();
   const key = scopeKey();
   ensureScopeState(key);
-  const isCorrect = typed.toLowerCase() === expected.toLowerCase();
+  const isCorrect = isRecallCorrect(typed);
 
   if(mode !== 'headquarters'){
     const el = elementFor(currentTarget);
@@ -617,7 +772,7 @@ function submitRecall(typedRaw){
   }
 
   if(isCorrect){
-    feedbackEl.textContent = 'Correct — ' + expected;
+    feedbackEl.textContent = tr('correct') + expected;
     feedbackEl.className = 'feedback ok';
     playCorrect();
     streaks[key]++;
@@ -625,10 +780,10 @@ function submitRecall(typedRaw){
     if(streaks[key] > bests[key]){
       bests[key] = streaks[key];
       saveBest(key, bests[key]);
-      showToast('New best (' + MODE_LABEL[mode] + ' · ' + PROV_LABEL[scope] + '): ' + bests[key]);
+      showToast(tr('new_best').replace('{m}', MODE_LABEL[mode]).replace('{p}', PROV_LABEL[scope]).replace('{n}', I18N.num(bests[key])));
     }
   } else {
-    feedbackEl.textContent = 'You typed "' + typed + '" — correct: ' + expected;
+    feedbackEl.textContent = tr('wrong_type').replace('{a}', typed).replace('{b}', expected);
     feedbackEl.className = 'feedback bad';
     playWrong();
     showReaction('wrong', null);
@@ -657,7 +812,7 @@ recallInput.addEventListener('input', () => {
   const seen = new Set();
   const matches = [];
   for(const n of pool){
-    if(n.toLowerCase().startsWith(val) && !seen.has(n)){
+    if(normNe(n).toLowerCase().startsWith(normNe(val)) && !seen.has(n)){
       seen.add(n);
       matches.push(n);
       if(matches.length >= 6) break;
@@ -688,47 +843,325 @@ function escapeAttr(s){
 }
 
 // ---- Search ----
-let searchTimer = null;
-let currentSearchMatch = null;
+// ---- Flash Mode: show every name with one tap ----
+let flashOn = false;
+const flashBtn = document.getElementById('flashBtn');
 
-function clearSearchHighlight(){
-  if(currentSearchMatch){
-    const el = elementFor(currentSearchMatch);
-    if(el) el.classList.remove('searched');
-    currentSearchMatch = null;
+function refreshFlashLabels(){
+  const pool = new Set(poolForScope().map(d => d.name));
+  districts.forEach(d => {
+    const lbl = labelFor(d.name);
+    if(!lbl) return;
+    const on = flashOn && (mode === 'district' || mode === 'headquarters') && pool.has(d.name);
+    lbl.classList.toggle('flash', on);
+    const txt = (on && mode === 'headquarters' && DISTRICT_FACTS[d.name]) ? hqCore(d.name) : dn(d.name, 'districts');
+    if(lbl.textContent !== txt) lbl.textContent = txt;
+  });
+  [['city-layer', 'cities', 'city'], ['landmark-layer', 'landmarks', 'landmark']].forEach(([layer, cat, modeName]) => {
+    svg.querySelectorAll('text.marker-label.' + layer).forEach(t => {
+      const name = t.getAttribute('data-name');
+      t.classList.toggle('flash', flashOn && mode === modeName && pool.has(name));
+      const txt = dn(name, cat);
+      if(t.textContent !== txt) t.textContent = txt;
+    });
+  });
+  if(flashBtn) flashBtn.classList.toggle('on', flashOn);
+}
+function toggleFlash(){
+  flashOn = !flashOn;
+  refreshFlashLabels();
+  showToast(tr(flashOn ? 'flash_on' : 'flash_off'));
+}
+if(flashBtn) flashBtn.addEventListener('click', toggleFlash);
+
+// ---- Search over everything on the map (districts, cities, landmarks, headquarters) + history ----
+const SEARCH_HISTORY_KEY = 'loksewa-search-history-v1';
+const SEARCH_HISTORY_MAX = 15;
+const HISTORY_VISIBLE = 5;       // rows shown before "See more"
+let historyExpanded = false;
+const TYPE_ORDER = { district:0, city:1, landmark:2, hq:3 };
+const TYPE_COLOR = { district:'#c9a24b', city:'#7ab8e0', landmark:'#c48fe0', hq:'#e07a63' };
+let searchHit = null;     // { type, name } currently highlighted on the map
+let searchPin = null;     // SVG pin used for cities / landmarks (they are hidden outside their own mode)
+let searchRows = [];      // items listed in the dropdown
+let searchActive = -1;    // keyboard-selected row
+
+const searchDrop = document.createElement('div');
+searchDrop.className = 'search-drop';
+searchDrop.id = 'searchDrop';
+searchWrap.appendChild(searchDrop);
+
+function catOf(type){ return type === 'city' ? 'cities' : (type === 'landmark' ? 'landmarks' : 'districts'); }
+function normQ(x){ return normNe(x).toLowerCase(); }
+
+function allSearchItems(){
+  const out = [];
+  districts.forEach(d => out.push({ type:'district', name:d.name }));
+  CITIES.forEach(c => out.push({ type:'city', name:c.name }));
+  LANDMARKS.forEach(l => out.push({ type:'landmark', name:l.name }));
+  Object.keys(DISTRICT_FACTS).forEach(d => out.push({ type:'hq', name:d }));
+  return out;
+}
+function itemTexts(it){
+  if(it.type === 'hq'){
+    const en = (DISTRICT_FACTS[it.name] || [''])[0];
+    const ne = NAMES_NE.hq[it.name] || '';
+    return [en, coreName(en), ne, coreName(ne)];
   }
+  return [it.name, (NAMES_NE[catOf(it.type)] || {})[it.name] || ''];
+}
+function itemLabel(it){
+  if(it.type === 'hq'){
+    const en = (DISTRICT_FACTS[it.name] || [it.name])[0];
+    return (isNe() && NAMES_NE.hq[it.name]) ? NAMES_NE.hq[it.name] : en;
+  }
+  return dn(it.name, catOf(it.type));
+}
+function itemTag(it){
+  if(it.type === 'hq') return tr('tag_hq').replace('{d}', dn(it.name, 'districts'));
+  return tr('tag_' + it.type);
+}
+function searchMatches(raw){
+  const q = normQ(raw);
+  if(!q) return [];
+  const scored = [];
+  allSearchItems().forEach(it => {
+    let best = 99;
+    itemTexts(it).forEach(t => {
+      const x = normQ(t);
+      if(!x) return;
+      let sc = 99;
+      if(x === q) sc = 0;
+      else if(x.startsWith(q)) sc = 1;
+      else if(x.split(' ').some(w => w.startsWith(q))) sc = 2;
+      else if(x.includes(q)) sc = 3;
+      if(sc < best) best = sc;
+    });
+    if(best < 99) scored.push({ it:it, sc:best });
+  });
+  scored.sort((a, b) => a.sc - b.sc || TYPE_ORDER[a.it.type] - TYPE_ORDER[b.it.type] || a.it.name.localeCompare(b.it.name));
+  return scored.slice(0, 8).map(x => x.it);
+}
+
+// history (saved in this browser only)
+function loadSearchHistory(){
+  try{
+    const a = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+    return Array.isArray(a) ? a.filter(x => x && x.type && x.name).slice(0, SEARCH_HISTORY_MAX) : [];
+  }catch(e){ return []; }
+}
+function saveSearchHistory(list){
+  try{ localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(list)); }catch(e){ /* storage unavailable */ }
+}
+function addToHistory(it){
+  const h = loadSearchHistory().filter(x => !(x.type === it.type && x.name === it.name));
+  h.unshift({ type:it.type, name:it.name });
+  saveSearchHistory(h.slice(0, SEARCH_HISTORY_MAX));
+}
+
+// highlighting on the map (works whatever mode is active)
+function focusOn(x, y){
+  if(currentScale() > 1.001){
+    vb.x = x - vb.w / 2;
+    vb.y = y - vb.h / 2;
+    clampViewBox();
+    applyViewBox();
+  }
+}
+function showSearchPin(x, y, label){
+  const NS = 'http://www.w3.org/2000/svg';
+  if(!searchPin){
+    searchPin = document.createElementNS(NS, 'g');
+    searchPin.setAttribute('class', 'search-pin');
+    ['ring', 'dot'].forEach(k => {
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('class', 'search-pin-' + k);
+      c.setAttribute('r', k === 'ring' ? 9 : 4.5);
+      searchPin.appendChild(c);
+    });
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('class', 'search-pin-label');
+    searchPin.appendChild(t);
+    svg.appendChild(searchPin);
+  }
+  searchPin.querySelectorAll('circle').forEach(c => { c.setAttribute('cx', x); c.setAttribute('cy', y); });
+  const t = searchPin.querySelector('text');
+  t.setAttribute('x', x + 10);
+  t.setAttribute('y', y - 9);
+  t.textContent = label;
+  searchPin.style.display = '';
+  svg.appendChild(searchPin); // keep on top
+  const ring = searchPin.querySelector('.search-pin-ring');
+  ring.style.animation = 'none'; void ring.getBoundingClientRect(); ring.style.animation = '';
+}
+function clearSearchHighlight(){
+  if(searchHit && (searchHit.type === 'district' || searchHit.type === 'hq')){
+    const p = pathFor(searchHit.name);
+    if(p) p.classList.remove('searched');
+  }
+  if(searchPin) searchPin.style.display = 'none';
+  searchHit = null;
+}
+function applySearchHit(it){
+  clearSearchHighlight();
+  let cx, cy;
+  if(it.type === 'district' || it.type === 'hq'){
+    const p = pathFor(it.name);
+    if(!p) return;
+    p.classList.add('searched');
+    const bb = p.getBBox();
+    cx = bb.x + bb.width / 2; cy = bb.y + bb.height / 2;
+  } else {
+    const item = (it.type === 'city' ? CITIES : LANDMARKS).find(x => x.name === it.name);
+    if(!item) return;
+    cx = item.x; cy = item.y;
+    showSearchPin(cx, cy, itemLabel(it));
+  }
+  searchHit = it;
+  focusOn(cx, cy);
+}
+
+// dropdown
+function hideSearchDrop(){ searchDrop.classList.remove('open'); }
+function setActiveRow(i){
+  searchActive = i;
+  searchDrop.querySelectorAll('.sd-row').forEach((r, k) => r.classList.toggle('active', k === i));
+  const el = searchDrop.querySelectorAll('.sd-row')[i];
+  if(el && el.scrollIntoView) el.scrollIntoView({ block:'nearest' });
+}
+function selectSearchItem(it){
+  applySearchHit(it);
+  addToHistory(it);
+  searchInput.value = itemLabel(it);
+  searchMsg.textContent = tr('found').replace('{n}', itemLabel(it) + (it.type === 'hq' ? ' · ' + itemTag(it) : ''));
+  searchMsg.className = 'search-msg';
+  hideSearchDrop();
+  searchInput.blur();
+}
+function makeSearchRow(it, i, showingHistory, animate){
+  const row = document.createElement('div');
+  row.className = 'sd-row' + (animate ? '' : ' still');
+  row.style.setProperty('--i', i);
+  const ico = document.createElement('span');
+  ico.className = 'sd-ico';
+  if(showingHistory){
+    ico.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15.5 14"></polyline></svg>';
+  } else {
+    ico.innerHTML = '<span class="sd-dot" style="background:' + TYPE_COLOR[it.type] + '"></span>';
+  }
+  const name = document.createElement('span'); name.className = 'sd-name'; name.textContent = itemLabel(it);
+  const tag = document.createElement('span'); tag.className = 'sd-tag'; tag.textContent = itemTag(it);
+  row.appendChild(ico); row.appendChild(name); row.appendChild(tag);
+  if(showingHistory){
+    const x = document.createElement('button');
+    x.type = 'button'; x.className = 'sd-x'; x.setAttribute('aria-label', tr('remove')); x.textContent = '×';
+    x.addEventListener('mousedown', e => e.preventDefault());
+    x.addEventListener('click', e => {
+      e.stopPropagation();
+      saveSearchHistory(loadSearchHistory().filter(h => !(h.type === it.type && h.name === it.name)));
+      renderSearchDrop();
+    });
+    row.appendChild(x);
+  }
+  row.addEventListener('mousedown', e => e.preventDefault());   // keep the input focused (keyboard stays open)
+  row.addEventListener('click', () => selectSearchItem(it));
+  return row;
+}
+
+// resetExpand = true when the list is freshly opened (always starts with 5 rows)
+function renderSearchDrop(resetExpand){
+  if(resetExpand === true) historyExpanded = false;
+  const q = searchInput.value.trim();
+  const showingHistory = !q;
+  const rows = showingHistory ? loadSearchHistory() : searchMatches(q);
+  searchRows = rows;
+  searchActive = -1;
+  searchDrop.innerHTML = '';
+  if(!rows.length){ hideSearchDrop(); return; }
+
+  if(showingHistory){
+    const head = document.createElement('div');
+    head.className = 'sd-head';
+    const title = document.createElement('span'); title.textContent = tr('recent');
+    const clear = document.createElement('button'); clear.type = 'button'; clear.className = 'sd-clear'; clear.textContent = tr('clear_all');
+    clear.addEventListener('mousedown', e => e.preventDefault());
+    clear.addEventListener('click', e => { e.stopPropagation(); saveSearchHistory([]); renderSearchDrop(true); });
+    head.appendChild(title); head.appendChild(clear);
+    searchDrop.appendChild(head);
+  }
+
+  const visible = showingHistory ? rows.slice(0, HISTORY_VISIBLE) : rows;
+  const extra = showingHistory ? rows.slice(HISTORY_VISIBLE) : [];
+  visible.forEach((it, i) => searchDrop.appendChild(makeSearchRow(it, i, showingHistory, true)));
+
+  if(extra.length){
+    const moreWrap = document.createElement('div');
+    moreWrap.className = 'sd-morewrap';
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'sd-more';
+    btn.textContent = tr(historyExpanded ? 'see_less' : 'see_more');
+    const box = document.createElement('div');
+    box.className = 'sd-extra' + (historyExpanded ? ' open' : '');
+    extra.forEach((it, i) => box.appendChild(makeSearchRow(it, i, true, false)));
+    btn.addEventListener('mousedown', e => e.preventDefault());
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      historyExpanded = !historyExpanded;
+      btn.textContent = tr(historyExpanded ? 'see_less' : 'see_more');
+      box.classList.toggle('open', historyExpanded);
+      box.style.maxHeight = historyExpanded ? (box.scrollHeight + 'px') : '0px';
+    });
+    moreWrap.appendChild(btn);
+    searchDrop.appendChild(moreWrap);
+    searchDrop.appendChild(box);
+    if(historyExpanded) box.style.maxHeight = '600px';
+  }
+  // open on the next frame so the drop animation always plays
+  requestAnimationFrame(() => searchDrop.classList.add('open'));
 }
 
 function runSearch(){
   const raw = searchInput.value.trim();
-  const q = raw.toLowerCase();
   clearSearchHighlight();
-  if(searchTimer) clearTimeout(searchTimer);
-
-  if(!q){
+  if(!raw){
     searchMsg.textContent = '';
     searchMsg.className = 'search-msg';
+    renderSearchDrop(true);
     return;
   }
-
-  const set = currentItemSet();
-  const match =
-    set.find(d => d.name.toLowerCase() === q) ||
-    set.find(d => d.name.toLowerCase().startsWith(q)) ||
-    set.find(d => d.name.toLowerCase().includes(q));
-
-  if(match){
-    const el = elementFor(match.name);
-    el.classList.add('searched');
-    currentSearchMatch = match.name;
-    searchMsg.textContent = 'Found: ' + match.name;
-    searchMsg.className = 'search-msg';
-  } else {
-    searchMsg.textContent = 'No ' + MODE_LABEL[mode].toLowerCase().slice(0,-1) + ' matches "' + raw + '"';
+  const matches = searchMatches(raw);
+  if(!matches.length){
+    searchDrop.classList.remove('open');
+    searchMsg.textContent = tr('no_match_all').replace('{q}', raw);
     searchMsg.className = 'search-msg err';
+    return;
   }
+  applySearchHit(matches[0]);    // live preview of the best match; saved to history once you pick it
+  searchMsg.textContent = '';
+  searchMsg.className = 'search-msg';
+  renderSearchDrop();
 }
 searchInput.addEventListener('input', runSearch);
+searchInput.addEventListener('focus', () => { if(searchWrap.classList.contains('ready')) renderSearchDrop(true); });
+searchInput.addEventListener('click', () => { if(searchWrap.classList.contains('ready') && !searchDrop.classList.contains('open')) renderSearchDrop(true); });
+// remember what was searched even if it was never "submitted" (like leaving the box after finding it)
+searchInput.addEventListener('blur', () => {
+  if(searchHit && searchInput.value.trim().length >= 2) addToHistory(searchHit);
+});
+searchInput.addEventListener('keydown', (e) => {
+  const n = searchRows.length;
+  if(e.key === 'ArrowDown' && n){ e.preventDefault(); setActiveRow((searchActive + 1) % n); }
+  else if(e.key === 'ArrowUp' && n){ e.preventDefault(); setActiveRow((searchActive - 1 + n) % n); }
+  else if(e.key === 'Enter'){
+    e.preventDefault();
+    const pick = searchActive >= 0 ? searchRows[searchActive] : searchRows[0];
+    if(pick) selectSearchItem(pick);
+  }
+  else if(e.key === 'Escape'){ hideSearchDrop(); }
+});
+document.addEventListener('pointerdown', (e) => {
+  if(!searchWrap.contains(e.target) && e.target !== searchIconBtn && !searchIconBtn.contains(e.target)) hideSearchDrop();
+});
 
 function togglePanel(){
   const isOpen = provPanel.classList.toggle('open');
@@ -740,6 +1173,13 @@ function closePanel(){
   provTab.classList.remove('open');
 }
 provTab.addEventListener('click', togglePanel);
+
+// Tapping anywhere outside an open tab list closes it (tapping its own tab still toggles it)
+document.addEventListener('pointerdown', (e) => {
+  [[provPanel, provTab, closePanel], [modePanel, modeTab, closeModePanel], [recallDropdown, recallTab, closeRecallDropdown]].forEach(([panel, tab, close]) => {
+    if(panel.classList.contains('open') && !panel.contains(e.target) && !tab.contains(e.target)) close();
+  });
+});
 
 function toggleModePanel(){
   const isOpen = modePanel.classList.toggle('open');
@@ -775,15 +1215,21 @@ searchIconBtn.addEventListener('click', () => {
   searchIconBtn.classList.toggle('active', isOpen);
   if(isOpen){
     searchInput.focus();
+    setTimeout(() => {                       // once the bar has finished sliding open, let the dropdown overflow it
+      if(searchWrap.classList.contains('open')){ searchWrap.classList.add('ready'); renderSearchDrop(true); }
+    }, 300);
   } else {
+    searchWrap.classList.remove('ready');
+    hideSearchDrop();
     searchInput.value = '';
     runSearch();
+    hideSearchDrop();
   }
 });
 
 muteBtn.addEventListener('click', () => {
   soundOn = !soundOn;
-  muteBtn.textContent = soundOn ? 'SOUND ON' : 'SOUND OFF';
+  muteBtn.textContent = tr(soundOn ? 'sound_on' : 'sound_off');
   muteBtn.classList.toggle('active', soundOn);
   if(soundOn) ensureAudio();
 });
@@ -824,18 +1270,22 @@ const storage = {
 
 // ---- Data loading ----
 async function loadData(){
-  const [districtsData, provinceData, citiesData, landmarksData, factsData] = await Promise.all([
+  const [districtsData, provinceData, citiesData, landmarksData, factsData, namesData, factsNeData] = await Promise.all([
     fetch('districts.json').then(r => r.json()),
     fetch('provinces.json').then(r => r.json()),
     fetch('cities.json').then(r => r.json()),
     fetch('landmarks.json').then(r => r.json()),
     fetch('facts.json').then(r => r.json()),
+    fetch('names_ne.json').then(r => r.json()).catch(() => NAMES_NE),
+    fetch('facts_ne.json').then(r => r.json()).catch(() => ({})),
   ]);
   DATA = districtsData;
   PROVINCE_OF = provinceData;
   CITIES = citiesData;
   LANDMARKS = landmarksData;
   DISTRICT_FACTS = factsData;
+  NAMES_NE = namesData;
+  FACTS_NE = factsNeData;
 }
 
 function showFactPanel(name){
@@ -844,11 +1294,12 @@ function showFactPanel(name){
     return;
   }
   const [hq, pop, area, fact] = DISTRICT_FACTS[name];
-  factDistrict.textContent = name;
-  factHq.textContent = 'HQ: ' + hq;
-  factPop.textContent = pop.toLocaleString() + ' people';
-  factArea.textContent = area.toLocaleString() + ' km²';
-  factText.textContent = fact;
+  factDistrict.textContent = dn(name, 'districts');
+  lastFactName = name;
+  factHq.textContent = tr('hq').replace('{n}', (isNe() && NAMES_NE.hq[name]) ? NAMES_NE.hq[name] : hq);
+  factPop.textContent = tr('people').replace('{n}', I18N.numFmt(pop));
+  factArea.textContent = tr('area').replace('{n}', I18N.numFmt(area));
+  factText.textContent = (isNe() && FACTS_NE[name]) ? FACTS_NE[name] : fact;
   factPanel.style.display = '';
 }
 
@@ -865,6 +1316,7 @@ function initViewBox(){
 }
 function applyViewBox(){
   svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  mapViewport.classList.toggle('zoomed', currentScale() > 1.001);
 }
 function currentScale(){
   return baseVB.w / vb.w;
@@ -896,6 +1348,8 @@ const activePointers = new Map();
 let pinchStartDist = 0;
 let pinchStartScale = 1;
 let panStart = null; // { screenX, screenY, vbX, vbY }
+let didDrag = false;  // true once a press has turned into a real drag (so we don't also "click" a district)
+const DRAG_PX = 5;
 
 function dist(p1, p2){
   return Math.hypot(p1.x - p2.x, p1.y - p2.y);
@@ -905,8 +1359,16 @@ function midpoint(p1, p2){
 }
 
 mapViewport.addEventListener('pointerdown', (e) => {
-  try{ mapViewport.setPointerCapture(e.pointerId); }catch(err){ /* ignore capture failures */ }
-  activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if(e.pointerType === 'mouse' && e.button !== 0) return;   // left button only
+  didDrag = false;
+  // Touch / pen: capture straight away (as before).
+  // Mouse: do NOT capture yet. Capturing on press redirects the click to the viewport,
+  // which is why districts could not be selected with a mouse. We capture only once a drag starts.
+  const captured = e.pointerType !== 'mouse';
+  if(captured){
+    try{ mapViewport.setPointerCapture(e.pointerId); }catch(err){ /* ignore capture failures */ }
+  }
+  activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, captured: captured });
   if(activePointers.size === 2){
     const pts = [...activePointers.values()];
     pinchStartDist = dist(pts[0], pts[1]);
@@ -917,8 +1379,9 @@ mapViewport.addEventListener('pointerdown', (e) => {
 });
 
 mapViewport.addEventListener('pointermove', (e) => {
-  if(!activePointers.has(e.pointerId)) return;
-  activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  const p = activePointers.get(e.pointerId);
+  if(!p) return;
+  p.x = e.clientX; p.y = e.clientY;
 
   if(activePointers.size === 2){
     const pts = [...activePointers.values()];
@@ -941,8 +1404,18 @@ mapViewport.addEventListener('pointermove', (e) => {
 
       clampViewBox();
       applyViewBox();
+      didDrag = true;
     }
   } else if(activePointers.size === 1 && panStart && currentScale() > 1){
+    const moved = Math.hypot(e.clientX - p.sx, e.clientY - p.sy);
+    if(moved >= DRAG_PX) didDrag = true;
+    if(!p.captured){
+      if(moved < DRAG_PX) return;                    // still just a click, not a drag
+      try{ mapViewport.setPointerCapture(e.pointerId); }catch(err){ /* ignore */ }
+      p.captured = true;
+      panStart = { screenX: e.clientX, screenY: e.clientY, vbX: vb.x, vbY: vb.y };  // no jump
+    }
+    mapViewport.classList.add('dragging');
     const rect = mapViewport.getBoundingClientRect();
     const dxScreen = e.clientX - panStart.screenX;
     const dyScreen = e.clientY - panStart.screenY;
@@ -959,46 +1432,103 @@ function endPointer(e){
   if(activePointers.size === 1){
     // A pinch just ended with one finger lifted first (the normal way people release a pinch).
     // Re-anchor the pan reference to the CURRENT zoomed viewBox and the surviving finger's
-    // current position — otherwise it snaps back to wherever that finger was before the zoom.
+    // current position, otherwise it snaps back to where that finger was before the zoom.
     const remaining = [...activePointers.values()][0];
     panStart = { screenX: remaining.x, screenY: remaining.y, vbX: vb.x, vbY: vb.y };
   } else if(activePointers.size === 0){
     panStart = null;
+    mapViewport.classList.remove('dragging');
   }
 }
 mapViewport.addEventListener('pointerup', endPointer);
 mapViewport.addEventListener('pointercancel', endPointer);
 mapViewport.addEventListener('pointerleave', endPointer);
 
-// Desktop scroll-wheel zoom, centered on cursor position
-mapViewport.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  const delta = e.deltaY < 0 ? 1.1 : 0.9;
-  let newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, currentScale() * delta));
+// After a real drag, swallow the click that follows so panning never selects a district
+mapViewport.addEventListener('click', (e) => {
+  if(didDrag){ e.stopPropagation(); e.preventDefault(); didDrag = false; }
+}, true);
 
+// Zoom helper shared by wheel, trackpad pinch and keyboard (cx, cy are relative to the viewport)
+function zoomAt(factor, cx, cy){
+  const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, currentScale() * factor));
   const rect = mapViewport.getBoundingClientRect();
-  const cursorX = e.clientX - rect.left;
-  const cursorY = e.clientY - rect.top;
-  const content = screenToContent(cursorX, cursorY);
-
+  const content = screenToContent(cx, cy);
   vb.w = baseVB.w / newScale;
   vb.h = baseVB.h / newScale;
-  vb.x = content.x - (cursorX / rect.width) * vb.w;
-  vb.y = content.y - (cursorY / rect.height) * vb.h;
-
+  vb.x = content.x - (cx / rect.width) * vb.w;
+  vb.y = content.y - (cy / rect.height) * vb.h;
   clampViewBox();
   applyViewBox();
+}
+function zoomBy(factor){
+  const rect = mapViewport.getBoundingClientRect();
+  zoomAt(factor, rect.width / 2, rect.height / 2);
+}
+
+// Scroll wheel / trackpad zoom, centered on the cursor (smooth for trackpads, steady for mouse wheels)
+mapViewport.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  let dy = e.deltaY;
+  if(e.deltaMode === 1) dy *= 33; else if(e.deltaMode === 2) dy *= 300;
+  let factor = Math.exp(-dy * (e.ctrlKey ? 0.01 : 0.0016));   // ctrl = trackpad pinch gesture
+  factor = Math.min(1.3, Math.max(0.77, factor));
+  const rect = mapViewport.getBoundingClientRect();
+  zoomAt(factor, e.clientX - rect.left, e.clientY - rect.top);
 }, { passive:false });
+
+// Keyboard: + / - zoom, 0 resets, arrow keys pan when zoomed in
+document.addEventListener('keydown', (e) => {
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  const tag = (e.target && e.target.tagName) || '';
+  if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  if(e.key === '+' || e.key === '='){ zoomBy(1.25); e.preventDefault(); }
+  else if(e.key === '-' || e.key === '_'){ zoomBy(0.8); e.preventDefault(); }
+  else if(e.key === '0'){ resetMapZoom(); }
+  else if(e.key === 'r' || e.key === 'R'){ toggleFlash(); }
+  else if(currentScale() > 1 && e.key.startsWith('Arrow')){
+    const step = 0.12;
+    if(e.key === 'ArrowLeft')  vb.x -= vb.w * step;
+    if(e.key === 'ArrowRight') vb.x += vb.w * step;
+    if(e.key === 'ArrowUp')    vb.y -= vb.h * step;
+    if(e.key === 'ArrowDown')  vb.y += vb.h * step;
+    clampViewBox(); applyViewBox(); e.preventDefault();
+  }
+});
+
+// ---- Language switching ----
+function refreshLanguage(){
+  I18N.apply();
+  svg.querySelectorAll('text.district-label').forEach(l => { l.textContent = dn(l.getAttribute('data-name'), 'districts'); });
+  muteBtn.textContent = tr(soundOn ? 'sound_on' : 'sound_off');
+  provGrid.innerHTML = ''; modeGrid.innerHTML = ''; recallGrid.innerHTML = '';
+  buildProvinceUI(); buildModeUI(); buildRecallModeUI();
+  modeTabLabel.textContent = MODE_LABEL[tapCategory];
+  recallTabLabel.textContent = recallUsed ? MODE_LABEL[recallCategory] : tr('recall_mode');
+  provTabLabel.textContent = PROV_LABEL[scope];
+  updateScores();
+  renderPrompt();
+  refreshFlashLabels();
+  if(searchHit) applySearchHit(searchHit);
+  if(searchDrop.classList.contains('open')) renderSearchDrop();
+  if(factPanel.style.display !== 'none' && lastFactName) showFactPanel(lastFactName);
+}
+document.addEventListener('langchange', refreshLanguage);
 
 // ---- Init ----
 (async function init(){
-  await loadData();
-  buildMap();
-  initViewBox();
-  buildModeUI();
-  buildRecallModeUI();
-  buildProvinceUI();
-  applyDimming();
-  await loadBests();
-  pickNext();
+  try{
+    await loadData();
+    buildMap();
+    initViewBox();
+    buildModeUI();
+    buildRecallModeUI();
+    buildProvinceUI();
+    applyDimming();
+    await loadBests();
+    pickNext();
+  }catch(err){
+    console.error('Quiz start-up problem:', err);
+  }
+  try{ refreshLanguage(); }catch(err){ console.error('Language refresh problem:', err); }
 })();
