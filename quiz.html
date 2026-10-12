@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nepal जिल्ला Quiz</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=20261012b">
 <link rel="stylesheet" href="nav.css" />
 <link rel="stylesheet" href="desktop.css" />
 </head>
@@ -82,10 +82,16 @@
     <div class="recall-suggestions" id="recallSuggestions"></div>
   </div>
 
+  <div class="map-tools">
+    <button class="flash-btn" id="flashBtn" type="button" title="Reveal all names">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <span data-i18n="flash">Reveal</span>
+    </button>
+  </div>
+
   <div class="map-frame">
     <div class="tap-label" id="tapLabel"></div>
     <div class="reaction-pop" id="reactionPop"></div>
-    <button class="flash-btn" id="flashBtn" type="button" title="Flash: show all names"><span class="flash-ico">⚡</span><span data-i18n="flash">Flash</span></button>
     <button class="zoom-reset" id="zoomReset" title="Reset zoom">⤢</button>
     <div class="map-viewport" id="mapViewport">
       <svg id="map" viewBox="0 0 1000 572" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -124,8 +130,8 @@
 
 
 
-<script src="i18n.js"></script>
-<script src="nav.js"></script>
-<script src="app.js"></script>
+<script src="i18n.js?v=20261012b"></script>
+<script src="nav.js?v=20261012b"></script>
+<script src="app.js?v=20261012b"></script>
 </body>
 </html>

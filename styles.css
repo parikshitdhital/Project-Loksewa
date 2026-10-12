@@ -772,19 +772,21 @@ svg path.district.searched.bg-mode{
   opacity:1;
 }
 
-/* ---- Flash Mode ---- */
+/* ---- Reveal (Flash) button: sits just above the map, outside the canvas ---- */
+.map-tools{ display:flex; justify-content:flex-start; margin:0 0 8px; }
 .flash-btn{
-  position:absolute; top:14px; right:52px; z-index:5;
-  height:30px; padding:0 10px;
-  display:flex; align-items:center; gap:5px;
-  border-radius:8px;
-  background:rgba(10,20,16,0.85);
+  height:34px; padding:0 14px;
+  display:flex; align-items:center; gap:7px;
+  border-radius:10px;
+  background:var(--bg-panel);
   border:1px solid var(--ridge);
   color:var(--gold-soft);
-  font-family:var(--font-body); font-size:12px; font-weight:600;
+  font-family:var(--font-body); font-size:13px; font-weight:600;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
+  transition:background-color .15s, color .15s, border-color .15s, transform .1s;
 }
+.flash-btn:active{ transform:scale(.97); }
 .flash-btn.on{ background:var(--gold); color:var(--bg-deep); border-color:var(--gold-soft); }
 .district-label.flash{ opacity:1; }
 .marker-label{
@@ -793,3 +795,14 @@ svg path.district.searched.bg-mode{
   opacity:0; pointer-events:none; transition:opacity .2s;
 }
 .marker-label.flash{ opacity:1; }
+
+/* ---- History: "See more" ---- */
+.sd-row.still{ opacity:1; transform:none; animation:none; }
+.sd-morewrap{ display:flex; justify-content:center; padding:2px 0 4px; }
+.sd-more{
+  background:none; border:none; cursor:pointer;
+  color:var(--gold-soft); font-size:11px; letter-spacing:.3px;
+  padding:3px 12px; border-radius:10px;
+}
+.sd-more:hover{ background:rgba(230,200,119,.12); }
+.sd-extra{ max-height:0; overflow:hidden; transition:max-height .3s ease; }

@@ -61,9 +61,25 @@ function row(name, cls, msg){
     menu += langBtn ? ' · language toggle FOUND' : ' · language toggle NOT FOUND';
   }catch(e){ menu = 'could not test (' + e.message + ')'; }
 
+  // are the latest quiz files really the ones being served?
+  let quizInfo = '';
+  try{
+    const get = async f => (await (await fetch(f + '?nocache=' + Date.now(), { cache:'no-store' })).text());
+    const [appJs, quizHtml, css] = await Promise.all([get('app.js'), get('quiz.html'), get('styles.css')]);
+    const ver = (appJs.match(/LH_APP_VERSION\s*=\s*'([^']+)'/) || [])[1];
+    const parts = [
+      ['app.js', !!ver && appJs.includes('historyExpanded') && appJs.includes('REPEAT_PENALTY')],
+      ['quiz.html', quizHtml.includes('map-tools')],
+      ['styles.css', css.includes('sd-morewrap')]
+    ];
+    const bad = parts.filter(p => !p[1]).map(p => p[0]);
+    quizInfo = '<b>Newest quiz files:</b> ' + (bad.length ? '<span class="bad">OLD or missing: ' + bad.join(', ') + '</span>' : '<span class="ok">all up to date (script ' + ver + ')</span>') + '<br>';
+  }catch(e){ quizInfo = '<b>Newest quiz files:</b> <span class="warn">could not check</span><br>'; }
+
   const oldPages = Object.entries(pageInfo).filter(([k,v]) => !v.usesNav).map(([k]) => k);
   let html = '<b>Files missing:</b> ' + (missing.length ? '<span class="bad">' + missing.join(', ') + '</span>' : '<span class="ok">none</span>') + '<br>';
   html += '<b>Pages still on the OLD version:</b> ' + (oldPages.length ? '<span class="bad">' + oldPages.join(', ') + '</span>' : '<span class="ok">none</span>') + '<br>';
+  html += quizInfo;
   html += '<b>Menu on home page:</b> <span class="' + (menu.startsWith('FOUND') ? 'ok' : 'bad') + '">' + menu + '</span>';
   sum.innerHTML = html;
 })();
