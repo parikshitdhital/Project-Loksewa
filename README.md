@@ -21,6 +21,10 @@ step, no backend — any static host works. Everything lives in the root folder.
   History page and the constitution overview are fully bilingual (strings live inside
   `history.html` and `constitution.html`). Still English: the full constitution text (Nepali version pending).
 
+## Quiz extras
+- **Search** covers districts, cities, landmarks and headquarters (English or Nepali). Recent searches (last 10) are saved in the visitor's browser (`localStorage`, key `loksewa-search-history-v1`) and shown when the empty search box is tapped.
+- **Flash Mode** (⚡ button on the map, or the F key) shows every name in the current mode and pauses scoring while on.
+
 ## Desktop layout
 - `desktop.css` — wide-screen layout, loaded last on every page (3-column home cards, 2-column history and constitution lists, map-left / controls-right quiz, sticky summary column on era pages). Phones keep the original single-column layout.
 
